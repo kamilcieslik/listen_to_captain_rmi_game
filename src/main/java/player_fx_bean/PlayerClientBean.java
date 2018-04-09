@@ -38,7 +38,6 @@ public class PlayerClientBean extends VBox {
     @FXML
     private Button buttonDevice1Player3;
 
-
     public PlayerClientBean() {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 getClass().getResource("/fxml/player_client_bean.fxml"));
