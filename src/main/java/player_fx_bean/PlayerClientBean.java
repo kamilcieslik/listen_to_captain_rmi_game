@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 public class PlayerClientBean extends VBox implements Serializable, Initializable {
 
     public PlayerClientBean() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/player_client_bean.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/player_client_bean.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
