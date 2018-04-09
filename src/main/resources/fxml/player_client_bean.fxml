@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
-      prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1"
+      prefWidth="1600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="player_fx_bean.PlayerClientBean">
     <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0"
           style="-fx-background-color: grey; -fx-border-width: 1; -fx-border-color: #000;"
@@ -89,8 +89,8 @@
                     </VBox.margin>
                 </Label>
                 <Label prefHeight="25.0" prefWidth="2000.0"
-                       style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);"
-                       text="Kapitan gry:" textFill="WHITE">
+                       style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Kapitan gry:"
+                       textFill="WHITE">
                     <font>
                         <Font size="16.0"/>
                     </font>
@@ -123,8 +123,8 @@
                     <Insets bottom="3.0" right="3.0"/>
                 </HBox.margin>
                 <Label prefHeight="25.0" prefWidth="2000.0"
-                       style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);"
-                       text="Ilość graczy:" textFill="WHITE">
+                       style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Ilość graczy:"
+                       textFill="WHITE">
                     <font>
                         <Font size="16.0"/>
                     </font>
@@ -405,11 +405,9 @@
                             <Region VBox.vgrow="ALWAYS"/>
                         </VBox>
                     </VBox>
-                    <VBox fx:id="vBoxPlayer2Devices" alignment="TOP_CENTER" disable="true" maxHeight="0.0"
-                          maxWidth="0.0"
-                          minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0"
+                    <VBox fx:id="vBoxPlayer2Devices" alignment="TOP_CENTER"
                           style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );"
-                          visible="false" HBox.hgrow="ALWAYS">
+                          HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0"/>
                         </padding>
@@ -484,8 +482,8 @@
                                                 <Insets bottom="5.0" top="5.0"/>
                                             </HBox.margin>
                                             <HBox>
-                                                <Label fx:id="labelDevice2Player2_Parameter1_Name"
-                                                       prefHeight="25.0" text="Il. wentylatorów:">
+                                                <Label fx:id="labelDevice2Player2_Parameter1_Name" prefHeight="25.0"
+                                                       text="Il. wentylatorów:">
                                                     <HBox.margin>
                                                         <Insets left="10.0"/>
                                                     </HBox.margin>
@@ -493,8 +491,8 @@
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="labelDevice2Player2_Parameter1_Value"
-                                                       prefHeight="25.0" text="23 °C">
+                                                <Label fx:id="labelDevice2Player2_Parameter1_Value" prefHeight="25.0"
+                                                       text="3">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
@@ -504,8 +502,8 @@
                                                 </Label>
                                                 <Region maxHeight="1.0" minHeight="1.0" prefHeight="200.0"
                                                         HBox.hgrow="ALWAYS"/>
-                                                <Label fx:id="labelDevice2Player2_Parameter2_Name"
-                                                       prefHeight="25.0" text="Temp. silnika:">
+                                                <Label fx:id="labelDevice2Player2_Parameter2_Name" prefHeight="25.0"
+                                                       text="Temp. silnika:">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
@@ -522,15 +520,14 @@
                                                 <VBox.margin>
                                                     <Insets/>
                                                 </VBox.margin>
-                                                <Label fx:id="labelDevice2Player2_Parameter3_Name"
-                                                       prefHeight="25.0"
+                                                <Label fx:id="labelDevice2Player2_Parameter3_Name" prefHeight="25.0"
                                                        text="Temp. spalania (iloraz powyższych):">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="labelDevice2Player2_Parameter3_Value"
-                                                       prefHeight="25.0" text="12 °C">
+                                                <Label fx:id="labelDevice2Player2_Parameter3_Value" prefHeight="25.0"
+                                                       text="12 °C">
                                                     <font>
                                                         <Font size="13.0"/>
                                                     </font>
@@ -577,8 +574,7 @@
                                                 <Insets right="5.0"/>
                                             </HBox.margin>
                                         </Label>
-                                        <HBox alignment="TOP_CENTER" maxHeight="25.0" minHeight="25.0"
-                                              prefWidth="257.0"
+                                        <HBox alignment="TOP_CENTER" maxHeight="25.0" minHeight="25.0" prefWidth="257.0"
                                               style="-fx-background-color: #e4e4e4; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
                                               HBox.hgrow="ALWAYS">
                                             <Slider fx:id="sliderDevice3Player2_Value" max="500.0" min="20.0"
@@ -615,9 +611,10 @@
                             <Region VBox.vgrow="ALWAYS"/>
                         </VBox>
                     </VBox>
-                    <VBox fx:id="vBoxPlayer3Devices" alignment="TOP_CENTER"
+                    <VBox fx:id="vBoxPlayer3Devices" alignment="TOP_CENTER" disable="true" maxHeight="0.0"
+                          maxWidth="0.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0"
                           style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );"
-                          HBox.hgrow="ALWAYS">
+                          visible="false" HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0"/>
                         </padding>
