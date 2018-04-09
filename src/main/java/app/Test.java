@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import player_fx_bean.PlayerClientBean;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,18 +25,14 @@ public class Test extends Application {
 
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader();
-        try {
-            Test.mainStage = primaryStage;
-            loader.setLocation(getClass().getClassLoader().getResource("fxml/player_client_bean.fxml"));
-            loader.load();
-            Parent root = loader.getRoot();
-            primaryStage.getIcons().add(new Image("/image/app_icon.png"));
-            primaryStage.setScene(new Scene(root, 1600, 900));
-            primaryStage.centerOnScreen();
-            primaryStage.show();
-        } catch (IOException ioEcx) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ioEcx);
-        }
+        Test.mainStage = primaryStage;
+        PlayerClientBean playerClientBean = new PlayerClientBean();
+        loader.setController(playerClientBean);
+       Parent root = loader.getRoot();
+        primaryStage.getIcons().add(new Image("/image/app_icon.png"));
+       primaryStage.setScene(new Scene(root, 1600, 900));
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
 
     public void stop() {
