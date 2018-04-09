@@ -1,1 +1,1 @@
-# cooperative_rmi_game
+# listen_to_captain_rmi_game
