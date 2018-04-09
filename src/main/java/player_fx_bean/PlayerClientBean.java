@@ -6,8 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class PlayerClientBean extends VBox {
+public class PlayerClientBean extends VBox implements Serializable {
 
     @FXML
     private Label labelPlayerNick, labelCaptainNick, labelNumberOfPlayers, labelNumberOfPoints, labelPanelName,
