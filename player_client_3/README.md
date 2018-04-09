@@ -1,0 +1,1 @@
+Klient - gracz typu 3.

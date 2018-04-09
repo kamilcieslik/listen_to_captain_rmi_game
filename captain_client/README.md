@@ -1,0 +1,1 @@
+Klient - kapitan gry.
