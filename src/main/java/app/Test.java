@@ -1,7 +1,6 @@
 package app;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -10,9 +9,8 @@ import player_fx_bean.PlayerClientBean;
 public class Test extends Application {
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader();
             PlayerClientBean playerClientBean = new PlayerClientBean();
-            loader.setController(playerClientBean);
+            playerClientBean.initPlayerAndCaptainNicknames("mrfarinq", "cap", "Laboratorium paliw rakietowych");
             primaryStage.getIcons().add(new Image("/image/app_icon.png"));
             primaryStage.setScene(new Scene(playerClientBean, 1600, 900));
             primaryStage.centerOnScreen();
