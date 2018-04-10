@@ -2,6 +2,6 @@
 
 <?import player_fx_bean.PlayerClientBean?>
 
-<PlayerClientBean fx:id="playerBeanType_1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<PlayerClientBean fx:id="playerBeanType_3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                   minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/9.0.1"
                   xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.controller.MainController"/>
