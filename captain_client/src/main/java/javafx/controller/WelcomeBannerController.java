@@ -46,28 +46,23 @@ public class WelcomeBannerController implements Initializable {
     }
 
     private void loadMainScene() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                FXMLLoader loader = new FXMLLoader();
-                try {
-                    loader.setLocation(getClass().getClassLoader().getResource("fxml/login.fxml"));
-                    loader.load();
-                    Parent parent = loader.getRoot();
-                    Stage primaryStage = new Stage();
-                    Main.setMainStage(primaryStage);
-                    primaryStage.initStyle(StageStyle.DECORATED);
-                    primaryStage.resizableProperty().setValue(Boolean.FALSE);
-                    primaryStage.setTitle("Listen Your Captain - ver. Captain");
-                    primaryStage.getIcons().add(new Image("/image/icon.png"));
-                    primaryStage.setScene(new Scene(parent, 1185, 585));
-
-                    Stage stage = (Stage) progressBarAppLoading.getScene().getWindow();
-                    stage.hide();
-                    primaryStage.show();
-                } catch (IOException ioEcx) {
-                    Logger.getLogger(WelcomeBannerController.class.getName()).log(Level.SEVERE, null, ioEcx);
-                }
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader();
+            try {
+                loader.setLocation(getClass().getClassLoader().getResource("fxml/choose_nickname.fxml"));
+                loader.load();
+                Parent parent = loader.getRoot();
+                Stage primaryStage = new Stage();
+                Main.setMainStage(primaryStage);
+                primaryStage.setTitle("Listen To Your Captain - ver. Captain");
+                primaryStage.getIcons().add(new Image("/image/app_icon.png"));
+                primaryStage.resizableProperty().setValue(Boolean.FALSE);
+                primaryStage.setScene(new Scene(parent, 650, 352));
+                Stage stage = (Stage) progressBarAppLoading.getScene().getWindow();
+                stage.hide();
+                primaryStage.show();
+            } catch (IOException ioEcx) {
+                Logger.getLogger(WelcomeBannerController.class.getName()).log(Level.SEVERE, null, ioEcx);
             }
         });
     }

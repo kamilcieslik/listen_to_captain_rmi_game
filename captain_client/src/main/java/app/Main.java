@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
+    public static String captainNickname = "captain";
     private static Stage mainStage;
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;

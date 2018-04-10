@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
+    public static String nickname;
+    public static String captainNickname = "captain";
     private static Stage mainStage;
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
@@ -27,7 +29,7 @@ public class Main extends Application {
             loader.setLocation(getClass().getClassLoader().getResource("fxml/welcome_banner.fxml"));
             loader.load();
             Parent root = loader.getRoot();
-            mainStage.setTitle("Listen Your Captain - ver. Client no. 3");
+            mainStage.setTitle("Listen To Your Captain - ver. Client no. 3");
             mainStage.getIcons().add(new Image("/image/app_icon.png"));
             mainStage.initStyle(StageStyle.UNDECORATED);
             mainStage.resizableProperty().setValue(Boolean.FALSE);

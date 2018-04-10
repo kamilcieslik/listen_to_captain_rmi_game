@@ -13,3 +13,7 @@
     -fx-border-image-repeat: no-repeat;
     -fx-background-size: contain;
 }
+
+.textArea *.text {
+    -fx-text-alignment: center;
+}

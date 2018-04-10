@@ -51,17 +51,16 @@ public class WelcomeBannerController implements Initializable {
             public void run() {
                 FXMLLoader loader = new FXMLLoader();
                 try {
-                    loader.setLocation(getClass().getClassLoader().getResource("fxml/login.fxml"));
+                    loader.setLocation(getClass().getClassLoader().getResource("fxml/main.fxml"));
                     loader.load();
                     Parent parent = loader.getRoot();
                     Stage primaryStage = new Stage();
                     Main.setMainStage(primaryStage);
-                    primaryStage.initStyle(StageStyle.DECORATED);
-                    primaryStage.resizableProperty().setValue(Boolean.FALSE);
                     primaryStage.setTitle("Listen Your Captain - ver. Server");
-                    primaryStage.getIcons().add(new Image("/image/icon.png"));
-                    primaryStage.setScene(new Scene(parent, 1185, 585));
-
+                    primaryStage.getIcons().add(new Image("/image/app_icon.png"));
+                    primaryStage.setMinWidth(600);
+                    primaryStage.setMinHeight(900);
+                    primaryStage.setScene(new Scene(parent, 1600, 900));
                     Stage stage = (Stage) progressBarAppLoading.getScene().getWindow();
                     stage.hide();
                     primaryStage.show();
