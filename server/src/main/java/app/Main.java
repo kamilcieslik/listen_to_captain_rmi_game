@@ -1,6 +1,8 @@
 package app;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.controller.WelcomeBannerController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,15 +11,23 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import rmi.impl.CaptainImpl;
+import rmi.impl.PlayerImpl;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
     private static Stage mainStage;
+    public static ObservableList<CaptainImpl> captainObservableList = FXCollections.observableArrayList();
+    public static ObservableList<PlayerImpl> playerObservableList = FXCollections.observableArrayList();
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
+    }
+    public static Stage getMainStage() {
+        return mainStage;
     }
 
     public void start(Stage primaryStage) {
@@ -27,7 +37,7 @@ public class Main extends Application {
             loader.setLocation(getClass().getClassLoader().getResource("fxml/welcome_banner.fxml"));
             loader.load();
             Parent root = loader.getRoot();
-            mainStage.setTitle("Listen Your Captain - ver. Server");
+            mainStage.setTitle("Listen Your CaptainImpl - ver. ServerImpl");
             mainStage.getIcons().add(new Image("/image/app_icon.png"));
             mainStage.initStyle(StageStyle.UNDECORATED);
             mainStage.resizableProperty().setValue(Boolean.FALSE);
@@ -45,6 +55,22 @@ public class Main extends Application {
     }
 
     public void stop() {
+        Main.captainObservableList.forEach(connectedCaptain ->{
+            try {
+                connectedCaptain.getConnection().lossConnectionWithServer();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Main.playerObservableList.forEach(connectedPlayer ->{
+            try {
+                connectedPlayer.getConnection().lossConnectionWithServer();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
         System.exit(0);
     }
 

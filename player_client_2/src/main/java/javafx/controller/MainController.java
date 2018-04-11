@@ -15,5 +15,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         playerBeanType_2.initPlayerAndCaptainNicknames(Main.nickname, Main.captainNickname, "Laboratorium paliw rakietowych");
+        playerBeanType_2.setIntegerPropertyNumberOfPoints(42);
     }
 }

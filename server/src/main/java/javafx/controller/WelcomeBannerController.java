@@ -56,7 +56,7 @@ public class WelcomeBannerController implements Initializable {
                     Parent parent = loader.getRoot();
                     Stage primaryStage = new Stage();
                     Main.setMainStage(primaryStage);
-                    primaryStage.setTitle("Listen Your Captain - ver. Server");
+                    primaryStage.setTitle("Listen Your CaptainImpl - ver. ServerImpl");
                     primaryStage.getIcons().add(new Image("/image/app_icon.png"));
                     primaryStage.setMinWidth(600);
                     primaryStage.setMinHeight(900);

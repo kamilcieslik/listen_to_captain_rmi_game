@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import rmi.Server;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ public class Main extends Application {
     public static String nickname;
     public static String captainNickname = "captain";
     private static Stage mainStage;
+    public static Server server;
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
     }

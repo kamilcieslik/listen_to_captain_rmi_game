@@ -1,6 +1,8 @@
 package app;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.controller.WelcomeBannerController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,14 +11,23 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import rmi.Server;
+import rmi.impl.CaptainImpl;
+import rmi.impl.PlayerImpl;
 
 import java.io.IOException;
+import java.rmi.ConnectException;
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
     public static String captainNickname = "captain";
     private static Stage mainStage;
+    public static Server server;
+    public static CaptainImpl captain;
+    public static ObservableList<PlayerImpl> playerObservableList = FXCollections.observableArrayList();
+
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
     }
@@ -45,7 +56,10 @@ public class Main extends Application {
         }
     }
 
-    public void stop() {
+    public void stop() throws RemoteException {
+        if (server != null)
+            server.removeCommander(captainNickname);
+
         System.exit(0);
     }
 

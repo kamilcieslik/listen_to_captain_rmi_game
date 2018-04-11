@@ -31,7 +31,7 @@
            style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.25, 0, 0);"
            text="GRA WIELOOSOBOWA POLEGAJĄCA NA WYKONYWANIU ZADAŃ ZLECONYCH PRZEZ KAPITANA" textFill="WHITE">
         <font>
-            <Font name="System Bold" size="13.0"/>
+            <Font nickname="System Bold" size="13.0"/>
         </font>
         <VBox.margin>
             <Insets/>
@@ -41,7 +41,7 @@
            style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.25, 0, 0);" text="WERSJA GRACZA II"
            textAlignment="CENTER" textFill="#282828">
         <font>
-            <Font name="System Bold" size="13.0"/>
+            <Font nickname="System Bold" size="13.0"/>
         </font>
         <VBox.margin>
             <Insets top="-9.0"/>
