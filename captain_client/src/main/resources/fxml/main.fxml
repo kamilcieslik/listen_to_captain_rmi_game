@@ -98,8 +98,8 @@
                 <HBox style="-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );" VBox.vgrow="ALWAYS">
                     <TableView fx:id="tableViewPlayers" onMouseClicked="#tableViewPlayers_onMouseClicked" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES">
                         <columns>
-                            <TableColumn fx:id="tableColumnPlayers_Nickname" prefWidth="75.0" text="Nick gracza" />
-                     <TableColumn fx:id="tableColumnPlayers_Type" prefWidth="75.0" text="Typ gracza" />
+                            <TableColumn fx:id="tableColumnPlayers_Nickname" prefWidth="75.0" text="Nick" />
+                     <TableColumn fx:id="tableColumnPlayers_Type" prefWidth="75.0" text="Typ" />
                             <TableColumn fx:id="tableColumnPlayers_Points" prefWidth="75.0" text="Ilość punktów" />
                         </columns>
                         <columnResizePolicy>
@@ -156,7 +156,7 @@
                                         <Insets left="10.0" right="10.0" />
                                     </HBox.margin>
                                 </TextField>
-                                <Button minHeight="25.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonPlayerPointsForRound_onAction" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #268798; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Przyznaj" textFill="WHITE">
+                                <Button fx:id="buttonPlayerPointsForRound" minHeight="25.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonPlayerPointsForRound_onAction" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #268798; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Przyznaj" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -314,7 +314,7 @@
                         <VBox.margin>
                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                         </VBox.margin>
-                        <Button minHeight="25.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonStartRound_onAction" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #268798; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Rozpocznij rundę" textFill="WHITE">
+                        <Button fx:id="buttonStartRound" minHeight="25.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonStartRound_onAction" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #268798; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Rozpocznij rundę" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -341,7 +341,7 @@
                         </Label>
                     </HBox>
                     <HBox alignment="CENTER">
-                        <Label fx:id="labelRoundStatus" minWidth="74.0" prefHeight="25.0" prefWidth="162.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Status rundy: aktywna" textFill="WHITE">
+                        <Label fx:id="labelRoundStatus" alignment="CENTER" minWidth="74.0" prefHeight="25.0" prefWidth="297.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Status gry - nierozpoczęta" textFill="WHITE">
                             <font>
                                 <Font size="16.0" />
                             </font>

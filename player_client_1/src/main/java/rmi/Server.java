@@ -1,7 +1,10 @@
 package rmi;
 
+import rmi.impl.CaptainImpl;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface Server extends Remote
@@ -15,4 +18,5 @@ public interface Server extends Remote
     List<String> getListOfCommanders() throws RemoteException;
     boolean isExistCaptainNickname(String captainNickname) throws RemoteException;
     boolean isExistPlayerNickname(String playerNickname) throws RemoteException;
+    List<CaptainImpl> getCommanders() throws RemoteException;
 }

@@ -2,16 +2,25 @@ package rmi.impl;
 
 import rmi.Player;
 
-public class PlayerImpl {
+import java.io.Serializable;
+
+public class PlayerImpl implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Player connection;
-    private CaptainImpl captain;
+    private String captainName;
     private String type;
     private String nickname;
+    private Integer numberOfPoints;
 
-    public PlayerImpl(Player connection, String type, String nickname, CaptainImpl captain) {
+    public PlayerImpl() {
+    }
+
+    public PlayerImpl(Player connection, String type, String nickname, String captainName) {
         this.connection = connection;
         this.type = type;
         this.nickname = nickname;
+        this.captainName=captainName;
     }
 
     public Player getConnection() {
@@ -38,11 +47,25 @@ public class PlayerImpl {
         this.nickname = nickname;
     }
 
-    public CaptainImpl getCaptain() {
-        return captain;
+    public String getCaptainName() {
+        return captainName;
     }
 
-    public void setCaptain(CaptainImpl captain) {
-        this.captain = captain;
+    public void setCaptainName(String captainName) {
+        this.captainName = captainName;
+    }
+
+    public Integer getNumberOfPoints() {
+        return numberOfPoints;
+    }
+
+    public void setNumberOfPoints(Integer numberOfPoints) {
+        this.numberOfPoints = numberOfPoints;
+    }
+
+    public void addPoint(Integer points){
+        numberOfPoints+=points;
+        if (numberOfPoints<0)
+            numberOfPoints=0;
     }
 }

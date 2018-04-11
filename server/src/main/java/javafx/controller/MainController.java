@@ -34,24 +34,30 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<PlayerImpl, String> tableColumnPlayers_Captain;
     @FXML
+    private TableColumn<PlayerImpl, String> tableColumnPlayers_Type;
+    @FXML
+    private TableColumn<PlayerImpl, Integer> tableColumnPlayers_Points;
+
+
+    @FXML
     private TableView<CaptainImpl> tableViewCaptains;
     @FXML
     private TableColumn<CaptainImpl, String> tableColumnCaptains_Nickname;
+    @FXML
+    private TableColumn<CaptainImpl, Integer> tableColumnCaptains_NumberOfPlayers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         customMessageBox = new CustomMessageBox("image/app_icon.png");
         initTableViews();
-
-
     }
 
     @FXML
-    void buttonKickCaptain_onAction() {
+    void buttonKickCaptain_onAction() throws RemoteException {
         if (tableViewCaptains.getSelectionModel().getSelectedItem() != null) {
             CaptainImpl selectedCaptain = tableViewCaptains.getSelectionModel().getSelectedItem();
             server.removeCommander(selectedCaptain.getName());
-             Main.captainObservableList.remove(selectedCaptain);
+           //  Main.captainObservableList.remove(selectedCaptain);
         } else
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Operacja wyrzucenia kapitana z serwera nie powiedzie się.",
@@ -60,11 +66,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void buttonKickPlayer_onAction() {
+    void buttonKickPlayer_onAction() throws RemoteException {
         if (tableViewPlayers.getSelectionModel().getSelectedItem() != null) {
             PlayerImpl selectedPlayer = tableViewPlayers.getSelectionModel().getSelectedItem();
-            server.removeCommander(selectedPlayer.getNickname());
-            Main.playerObservableList.remove(selectedPlayer);
+            server.removePlayer(selectedPlayer.getNickname());
+           // Main.playerObservableList.remove(selectedPlayer);
         } else
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Operacja wyrzucenia kapitana z serwera nie powiedzie się.",
@@ -72,9 +78,9 @@ public class MainController implements Initializable {
                     .showAndWait();
     }
 
-    public void refreshCaptainsList(){
+    public void refreshCaptainsList() throws RemoteException {
         Main.captainObservableList.clear();
-        Main.captainObservableList.addAll(server.getCommanders().values());
+        Main.captainObservableList.addAll(server.getCommanders());
     }
 
     public void refreshPlayersList(){
@@ -83,9 +89,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void buttonRefreshCaptains_onAction() {
+    void buttonRefreshCaptains_onAction() throws RemoteException {
         Main.captainObservableList.clear();
-        Main.captainObservableList.addAll(server.getCommanders().values());
+        Main.captainObservableList.addAll(server.getCommanders());
     }
 
     @FXML
@@ -120,9 +126,13 @@ public class MainController implements Initializable {
 
     private void initTableViews() {
         tableColumnPlayers_Nickname.setCellValueFactory(new PropertyValueFactory<>("nickname"));
-        tableColumnPlayers_Captain.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCaptain().getName()));
+        tableColumnPlayers_Captain.setCellValueFactory(new PropertyValueFactory<>("captainNickname"));
+        tableColumnPlayers_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tableColumnPlayers_Points.setCellValueFactory(new PropertyValueFactory<>("numberOfPoints"));
+
 
         tableColumnCaptains_Nickname.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableColumnCaptains_NumberOfPlayers.setCellValueFactory(new PropertyValueFactory<>("numberOfPlayers"));
 
         tableViewPlayers.setItems(Main.playerObservableList);
         tableViewCaptains.setItems(Main.captainObservableList);

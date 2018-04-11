@@ -9,7 +9,7 @@ public class CaptainImpl   implements Serializable {
 
     private Captain connection;
     public String name;
-    private Integer numberOfPlayers = 0;
+    private Integer numberOfPlayers;
     private Boolean activeGame = false;
 
     public CaptainImpl(Captain connection, String name) {
@@ -55,5 +55,13 @@ public class CaptainImpl   implements Serializable {
 
     public void setActiveGame(Boolean activeGame) {
         this.activeGame = activeGame;
+    }
+
+    @Override
+    public String toString() {
+        return "CaptainImpl{" +
+                "name='" + name + '\'' +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
     }
 }

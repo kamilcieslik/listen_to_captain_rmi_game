@@ -56,7 +56,7 @@ public class WelcomeBannerController implements Initializable {
                     Parent parent = loader.getRoot();
                     Stage primaryStage = new Stage();
                     Main.setMainStage(primaryStage);
-                    primaryStage.setTitle("Listen Your CaptainImpl - ver. ServerImpl");
+                    primaryStage.setTitle("Listen Your Captain - ver. Server");
                     primaryStage.getIcons().add(new Image("/image/app_icon.png"));
                     primaryStage.setMinWidth(600);
                     primaryStage.setMinHeight(900);
@@ -65,6 +65,7 @@ public class WelcomeBannerController implements Initializable {
                     stage.hide();
                     primaryStage.show();
                 } catch (IOException ioEcx) {
+                    ioEcx.printStackTrace();
                     Logger.getLogger(WelcomeBannerController.class.getName()).log(Level.SEVERE, null, ioEcx);
                 }
             }
