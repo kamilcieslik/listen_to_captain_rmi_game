@@ -80,6 +80,56 @@ public class PlayerClientBean extends VBox implements Serializable {
     }
 
     // Metody publiczne:
+    public String getPlayerAnswers(Integer playerType) {
+        String roundAnswers = "";
+        roundAnswers += "Odpowiedzi gracza: " + labelPlayerNick.getText() + ":\n";
+        if (playerType == 1) {
+            if (!labelDevice1Player1_Message.getText().equals(""))
+                roundAnswers += "- prędkość rakiety: nie udzielono odpowiedzi,\n";
+            else
+                roundAnswers += "- prędkość rakiety: " + textFieldDevice1Player1_Value.getText() + ",\n";
+
+            if (!labelDevice2Player1_Message.getText().equals(""))
+                roundAnswers += "- tryb spalania paliwa: nie udzielono odpowiedzi,\n";
+            else {
+                if (isFuelCombustionMode_1())
+                    roundAnswers += "- tryb spalania paliwa: najdłuższy czas spalania,\n";
+                else
+                    roundAnswers += "- tryb spalania paliwa: najwyższa wydajność przyrządów,\n";
+            }
+            roundAnswers += "- kąt natarcia: " + String.valueOf(getDoublePropertyAngleOfAttack()) + ".\n";
+        } else if (playerType == 2) {
+            if (!labelDevice1Player2_Message.getText().equals(""))
+                roundAnswers += "- temperatura spalania: nie udzielono odpowiedzi,\n";
+            else
+                roundAnswers += "- temperatura spalania: " + textFieldDevice1Player2_Value.getText() + ",\n";
+
+            if (!labelDevice2Player2_Message.getText().equals(""))
+                roundAnswers += "- współczynnik spalania: nie udzielono odpowiedzi,\n";
+            else
+                roundAnswers += "- temperatura spalania: " + labelDevice2Player2_Parameter3_Value.getText() + ",\n";
+
+            roundAnswers += "- impuls jednostkowy: " + String.valueOf(getDoublePropertyCombustionTemperature()) + ".\n";
+        } else if (playerType == 3) {
+            if (!labelDevice1Player3_Message.getText().equals(""))
+                roundAnswers += "- ilość pocisków w magazynku: nie udzielono odpowiedzi,\n";
+            else
+                roundAnswers += "- ilość pocisków w magazynku: " + textFieldDevice1Player3_Value.getText() + ",\n";
+
+            if (!labelDevice2Player3_Message.getText().equals(""))
+                roundAnswers += "- rodzaj mechanizmu spustowego: nie udzielono odpowiedzi,\n";
+            else {
+                if (isTypeOfTriggerMechanism_1())
+                    roundAnswers += "- rodzaj mechanizmu spustowego: ogień seryjny,\n";
+                else
+                    roundAnswers += "- rodzaj mechanizmu spustowego: ogień pojedynczy,\n";
+            }
+            roundAnswers += "- ładowanie pocisku: " + labelDevice3Player3_Message.getText() + ".\n";
+        }
+
+        return  roundAnswers;
+    }
+
     public void initPlayerAndCaptainNicknames(String nickname, String captainNickname, String panelName) {
         labelPlayerNick.setText(nickname);
         stringPropertyCaptainNickname.setValue(captainNickname);

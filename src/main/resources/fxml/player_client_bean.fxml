@@ -313,7 +313,7 @@
                                             </HBox.margin>
                                         </Label>
                                         <HBox alignment="TOP_CENTER" maxHeight="25.0" minHeight="25.0" prefWidth="257.0" style="-fx-background-color: #e4e4e4; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
-                                            <Slider fx:id="sliderDevice3Player1_Value" max="30.0" min="-5.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" value="13.0" HBox.hgrow="ALWAYS">
+                                            <Slider fx:id="sliderDevice3Player1_Value" blockIncrement="1.0" max="30.0" min="-5.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" value="13.0" HBox.hgrow="ALWAYS">
                                                 <cursor>
                                                     <Cursor fx:constant="HAND" />
                                                 </cursor>
@@ -568,7 +568,7 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </RadioButton>
-                                        <RadioButton fx:id="radioButtonDevice2Player3_Option2" minHeight="17.0" minWidth="74.0" mnemonicParsing="false" prefHeight="17.0" text="ogień ponedynczy">
+                                        <RadioButton fx:id="radioButtonDevice2Player3_Option2" minHeight="17.0" minWidth="74.0" mnemonicParsing="false" prefHeight="17.0" text="ogień pojedynczy">
                                             <HBox.margin>
                                                 <Insets left="10.0" top="3.0" />
                                             </HBox.margin>
