@@ -57,4 +57,9 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     public void startRound(int roundTime) throws RemoteException {
         playerMainController.startCountdownToTheEndOfRound(roundTime);
     }
+
+    @Override
+    public void addOrSubtractPlayer(int value) throws RemoteException {
+        playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(playerMainController.getPlayerBeanType_1().getIntegerPropertyNumberOfPlayers() + value);
+    }
 }

@@ -30,6 +30,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         CaptainImpl connectedCommander = captains.get(commanderName);
         PlayerImpl player = new PlayerImpl(connection, type, name, commanderName);
         players.put(name, player);
+
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+            if (entry.getValue().getCaptainNickname().equals(commanderName))
+                entry.getValue().getConnection().addOrSubtractPlayer(1);
+
         if (connectedCommander != null) {
             connectedCommander.incrementNumberOfPlayers();
             connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), false);
@@ -56,6 +61,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         if (captains.containsKey(player.getCaptainNickname()))
             connectedCommander = captains.get(player.getCaptainNickname());
         players.remove(name);
+
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+            if (entry.getValue().getCaptainNickname().equals(player.getCaptainNickname()))
+                entry.getValue().getConnection().addOrSubtractPlayer(-1);
+
         if (connectedCommander != null) {
             connectedCommander.decrementNumberOfPlayers();
             connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), true);

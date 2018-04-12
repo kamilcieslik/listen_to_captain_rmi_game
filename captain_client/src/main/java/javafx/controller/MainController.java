@@ -115,23 +115,7 @@ public class MainController implements Initializable {
                             "Nie możesz rozpocząć rundy.",
                             "Powód: błąd połączenia z serwerem.").showAndWait();
                 }
-            } else if (gameHasBeenStarted) {
-                try {
-                    Main.server.removeCommander(Main.captainNickname);
-                    Main.server = null;
-                    labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
-                    customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
-                            "Gra została przerwana.",
-                            "Powód: zbyt duża ilość graczy opuściła grę.").showAndWait();
-                } catch (RemoteException e) {
-                    customMessageBox.showMessageBox(Alert.AlertType.ERROR, "BŁĄD KRYTYCZNY",
-                            "Gra została przerwana.",
-                            "Powód: utracono połączenie z serwerem.").showAndWait();
-                }
-            } else
-                customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
-                        "Nie możesz rozpocząć rundy.",
-                        "Powód: gra wymaga co najmniej dwóch graczy.").showAndWait();
+            }
         } else {
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Nie możesz rozpocząć rundy.",
@@ -175,6 +159,7 @@ public class MainController implements Initializable {
                     } catch (RemoteException ignored) {
                     }
 
+                    Main.playerObservableList.clear();
                     Main.server = null;
                     labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
                     customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
