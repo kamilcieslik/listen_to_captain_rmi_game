@@ -116,6 +116,11 @@ public class MainController implements Initializable {
                             "Powód: błąd połączenia z serwerem.").showAndWait();
                 }
             }
+            else
+                customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                        "Nie można rozpocząć gry.",
+                        "Powód: zbyt mała ilość graczy (min. 2).").showAndWait();
+
         } else {
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Nie możesz rozpocząć rundy.",

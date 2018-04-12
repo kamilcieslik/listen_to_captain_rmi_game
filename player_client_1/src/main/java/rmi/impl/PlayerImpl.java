@@ -1,5 +1,6 @@
 package rmi.impl;
 
+import javafx.application.Platform;
 import javafx.controller.MainController;
 import rmi.Player;
 import rmi.Server;
@@ -59,7 +60,7 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     }
 
     @Override
-    public void addOrSubtractPlayer(int value) throws RemoteException {
-        playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(playerMainController.getPlayerBeanType_1().getIntegerPropertyNumberOfPlayers() + value);
+    public void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException {
+        Platform.runLater(()->{playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers);});
     }
 }

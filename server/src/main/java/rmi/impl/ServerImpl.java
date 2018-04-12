@@ -31,9 +31,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         PlayerImpl player = new PlayerImpl(connection, type, name, commanderName);
         players.put(name, player);
 
+        Integer numberOfCaptainPlayers = 0;
         for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(commanderName))
-                entry.getValue().getConnection().addOrSubtractPlayer(1);
+                numberOfCaptainPlayers++;
+
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+            if (entry.getValue().getCaptainNickname().equals(commanderName))
+                entry.getValue().getConnection().updateNumberOfPlayers(numberOfCaptainPlayers);
 
         if (connectedCommander != null) {
             connectedCommander.incrementNumberOfPlayers();
@@ -62,9 +67,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             connectedCommander = captains.get(player.getCaptainNickname());
         players.remove(name);
 
+        Integer numberOfCaptainPlayers = 0;
         for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(player.getCaptainNickname()))
-                entry.getValue().getConnection().addOrSubtractPlayer(-1);
+                numberOfCaptainPlayers++;
+
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+            if (entry.getValue().getCaptainNickname().equals(player.getCaptainNickname()))
+                entry.getValue().getConnection().updateNumberOfPlayers(numberOfCaptainPlayers);
 
         if (connectedCommander != null) {
             connectedCommander.decrementNumberOfPlayers();
@@ -149,6 +159,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void startRound(int roundTime, String captainNickname) throws RemoteException {
+        captains.get(captainNickname).setActiveGame(true);
         for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().getConnection().startRound(roundTime);

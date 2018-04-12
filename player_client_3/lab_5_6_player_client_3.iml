@@ -15,6 +15,8 @@
     <orderEntry type="library" name="Maven: edu.pwr.java:lab_5_6_player_fx_bean_jar:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:4.0.0" level="project" />
     <orderEntry type="library" name="Maven: edu.pwr.java:lab_5_6_player_fx_bean_jar:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:4.0.0" level="project" />
+    <orderEntry type="library" name="Maven: edu.pwr.java:lab_5_6_player_fx_bean_jar:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.0.4.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />

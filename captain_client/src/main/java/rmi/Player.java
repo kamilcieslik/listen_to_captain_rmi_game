@@ -8,5 +8,5 @@ public interface Player extends Remote
     void confirmConnection(String message) throws RemoteException;
     void receiveCommand(SpaceCommand command) throws RemoteException;
     void lossConnectionWithServer() throws RemoteException;
-    void addOrSubtractPlayer(int value) throws RemoteException;
+    void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException;
 }

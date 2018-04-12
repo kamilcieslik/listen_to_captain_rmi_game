@@ -10,5 +10,5 @@ public interface Player extends Remote
     void lossConnectionWithServer() throws RemoteException;
     void startRound(int roundTime) throws RemoteException;
 
-    void addOrSubtractPlayer(int value) throws RemoteException;
+    void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException;
 }
