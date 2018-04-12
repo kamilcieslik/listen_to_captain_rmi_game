@@ -1,6 +1,6 @@
-package rmi;
+package rmi.remote;
 
-import rmi.impl.PlayerImpl;
+import rmi.remote.impl.PlayerImpl;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

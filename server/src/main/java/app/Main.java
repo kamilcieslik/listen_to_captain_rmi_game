@@ -11,8 +11,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import rmi.impl.CaptainImpl;
-import rmi.impl.PlayerImpl;
+import rmi.CaptainClient;
+import rmi.PlayerClient;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 
 public class Main extends Application {
     private static Stage mainStage;
-    public static ObservableList<CaptainImpl> captainObservableList = FXCollections.observableArrayList();
-    public static ObservableList<PlayerImpl> playerObservableList = FXCollections.observableArrayList();
+    public static ObservableList<CaptainClient> captainObservableList = FXCollections.observableArrayList();
+    public static ObservableList<PlayerClient> playerObservableList = FXCollections.observableArrayList();
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
     }
@@ -37,7 +37,7 @@ public class Main extends Application {
             loader.setLocation(getClass().getClassLoader().getResource("fxml/welcome_banner.fxml"));
             loader.load();
             Parent root = loader.getRoot();
-            mainStage.setTitle("Listen Your CaptainImpl - ver. ServerImpl");
+            mainStage.setTitle("Listen Your CaptainClient - ver. ServerImpl");
             mainStage.getIcons().add(new Image("/image/app_icon.png"));
             mainStage.initStyle(StageStyle.UNDECORATED);
             mainStage.resizableProperty().setValue(Boolean.FALSE);

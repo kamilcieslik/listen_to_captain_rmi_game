@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.CustomMessageBox;
-import rmi.Server;
-import rmi.impl.CaptainImpl;
+import rmi.remote.Server;
+import rmi.remote.impl.CaptainImpl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

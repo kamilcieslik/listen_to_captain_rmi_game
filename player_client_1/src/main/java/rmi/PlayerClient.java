@@ -1,27 +1,27 @@
-package rmi.impl;
+package rmi;
 
-import rmi.Player;
+import rmi.remote.Player;
 
 import java.io.Serializable;
 
-public class PlayerImpl implements  Serializable {
+public class PlayerClient implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Player connection;
-    private String captainNickname;
+    private String captainName;
     private String type;
     private String nickname;
-    private Integer numberOfPoints =0;
+    private Integer numberOfPoints;
     private String roundAnswers = "";
 
-    public PlayerImpl() {
+    public PlayerClient() {
     }
 
-    public PlayerImpl(Player connection, String type, String nickname, String captainNickname) {
+    public PlayerClient(Player connection, String type, String nickname, String captainName) {
         this.connection = connection;
         this.type = type;
         this.nickname = nickname;
-        this.captainNickname = captainNickname;
+        this.captainName=captainName;
     }
 
     public Player getConnection() {
@@ -48,16 +48,12 @@ public class PlayerImpl implements  Serializable {
         this.nickname = nickname;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public String getCaptainName() {
+        return captainName;
     }
 
-    public String getCaptainNickname() {
-        return captainNickname;
-    }
-
-    public void setCaptainNickname(String captainNickname) {
-        this.captainNickname = captainNickname;
+    public void setCaptainName(String captainName) {
+        this.captainName = captainName;
     }
 
     public Integer getNumberOfPoints() {
@@ -70,6 +66,8 @@ public class PlayerImpl implements  Serializable {
 
     public void addPoint(Integer points){
         numberOfPoints+=points;
+        if (numberOfPoints<0)
+            numberOfPoints=0;
     }
 
     public String getRoundAnswers() {
@@ -78,5 +76,13 @@ public class PlayerImpl implements  Serializable {
 
     public void setRoundAnswers(String roundAnswers) {
         this.roundAnswers = roundAnswers;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerClient{" +
+                "nickname='" + nickname + '\'' +
+                ", numberOfPoints=" + numberOfPoints +
+                '}';
     }
 }

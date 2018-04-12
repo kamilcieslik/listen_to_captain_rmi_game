@@ -11,12 +11,11 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import rmi.Server;
-import rmi.impl.CaptainImpl;
-import rmi.impl.PlayerImpl;
+import rmi.remote.Server;
+import rmi.remote.impl.CaptainImpl;
+import rmi.PlayerClient;
 
 import java.io.IOException;
-import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +25,7 @@ public class Main extends Application {
     private static Stage mainStage;
     public static Server server;
     public static CaptainImpl captain;
-    public static ObservableList<PlayerImpl> playerObservableList = FXCollections.observableArrayList();
+    public static ObservableList<PlayerClient> playerObservableList = FXCollections.observableArrayList();
 
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;

@@ -13,9 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import rmi.Server;
-import rmi.impl.CaptainImpl;
-import rmi.impl.PlayerImpl;
+import rmi.remote.Server;
+import rmi.CaptainClient;
+import rmi.remote.impl.PlayerImpl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class ChooseNicknameAndCaptainController implements Initializable {
     private CustomMessageBox customMessageBox;
-    private ObservableList<CaptainImpl> captainObservableList = FXCollections.observableArrayList();
+    private ObservableList<CaptainClient> captainObservableList = FXCollections.observableArrayList();
     Server server;
 
     @FXML
@@ -41,13 +41,13 @@ public class ChooseNicknameAndCaptainController implements Initializable {
     private Label labelNick;
 
     @FXML
-    private TableView<CaptainImpl> tableViewGames;
+    private TableView<CaptainClient> tableViewGames;
 
     @FXML
-    private TableColumn<CaptainImpl, String> tableColumnCaptain;
+    private TableColumn<CaptainClient, String> tableColumnCaptain;
 
     @FXML
-    private TableColumn<CaptainImpl, Integer> tableColumnNumberOfPlayers;
+    private TableColumn<CaptainClient, Integer> tableColumnNumberOfPlayers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

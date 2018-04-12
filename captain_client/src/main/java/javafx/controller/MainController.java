@@ -13,11 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import rmi.impl.PlayerImpl;
+import rmi.PlayerClient;
 
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,16 +37,16 @@ public class MainController implements Initializable {
     private Label labelCaptainPanel, labelTimeToEndOfRound, labelRoundStatus, labelConnectionStatus;
 
     @FXML
-    private TableView<PlayerImpl> tableViewPlayers;
+    private TableView<PlayerClient> tableViewPlayers;
 
     @FXML
-    private TableColumn<PlayerImpl, String> tableColumnPlayers_Nickname;
+    private TableColumn<PlayerClient, String> tableColumnPlayers_Nickname;
 
     @FXML
-    private TableColumn<PlayerImpl, Integer> tableColumnPlayers_Points;
+    private TableColumn<PlayerClient, Integer> tableColumnPlayers_Points;
 
     @FXML
-    private TableColumn<PlayerImpl, String> tableColumnPlayers_Type;
+    private TableColumn<PlayerClient, String> tableColumnPlayers_Type;
 
     @FXML
     private TextArea textAreaPlayerResults;
@@ -79,8 +78,12 @@ public class MainController implements Initializable {
     void buttonEndGame_onAction() {
         try {
             Main.server.finishTheGame(Main.captainNickname, Main.playerObservableList
-                    .stream().sorted(Comparator.comparing(PlayerImpl::getNumberOfPoints)).collect(Collectors.toList()));
+                    .stream().sorted(Comparator.comparing(PlayerClient::getNumberOfPoints)).collect(Collectors.toList()));
             Main.playerObservableList.clear();
+            textAreaPlayerResults.setText("");
+            buttonPlayerPointsForRound.setDisable(true);
+            buttonStartRound.setDisable(true);
+            buttonEndGame.setDisable(true);
             Main.server = null;
             labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
             labelRoundStatus.setText("Wysłano wyniki, zakończono grę.");
@@ -188,7 +191,7 @@ public class MainController implements Initializable {
         tableViewPlayers.setItems(Main.playerObservableList);
     }
 
-    public void refreshTableView(List<PlayerImpl> playerList, Boolean playerHasBeenRemoved) {
+    public void refreshTableView(List<PlayerClient> playerList, Boolean playerHasBeenRemoved) {
         Main.playerObservableList.clear();
         Main.playerObservableList.addAll(playerList);
         if (playerHasBeenRemoved) {

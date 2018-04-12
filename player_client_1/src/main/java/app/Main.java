@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import rmi.Server;
-import rmi.impl.PlayerImpl;
+import rmi.remote.Server;
+import rmi.remote.impl.PlayerImpl;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

@@ -1,18 +1,18 @@
-package rmi.impl;
+package rmi;
 
-import rmi.Captain;
+import rmi.remote.Captain;
 
 import java.io.Serializable;
 
-public class CaptainImpl   implements Serializable {
+public class CaptainClient implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Captain connection;
     public String name;
-    private Integer numberOfPlayers = 0;
+    private Integer numberOfPlayers;
     private Boolean activeGame = false;
 
-    public CaptainImpl(Captain connection, String name) {
+    public CaptainClient(Captain connection, String name) {
         this.connection = connection;
         this.name = name;
     }
@@ -55,5 +55,13 @@ public class CaptainImpl   implements Serializable {
 
     public void setActiveGame(Boolean activeGame) {
         this.activeGame = activeGame;
+    }
+
+    @Override
+    public String toString() {
+        return "CaptainClient{" +
+                "name='" + name + '\'' +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
     }
 }

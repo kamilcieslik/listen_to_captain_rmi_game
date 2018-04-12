@@ -1,27 +1,27 @@
-package rmi.impl;
+package rmi;
 
-import rmi.Player;
+import rmi.remote.Player;
 
 import java.io.Serializable;
 
-public class PlayerImpl implements Serializable {
+public class PlayerClient implements  Serializable {
     private static final long serialVersionUID = 1L;
 
     private Player connection;
-    private String captainName;
+    private String captainNickname;
     private String type;
     private String nickname;
-    private Integer numberOfPoints;
+    private Integer numberOfPoints =0;
     private String roundAnswers = "";
 
-    public PlayerImpl() {
+    public PlayerClient() {
     }
 
-    public PlayerImpl(Player connection, String type, String nickname, String captainName) {
+    public PlayerClient(Player connection, String type, String nickname, String captainNickname) {
         this.connection = connection;
         this.type = type;
         this.nickname = nickname;
-        this.captainName=captainName;
+        this.captainNickname = captainNickname;
     }
 
     public Player getConnection() {
@@ -48,12 +48,16 @@ public class PlayerImpl implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getCaptainName() {
-        return captainName;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setCaptainName(String captainName) {
-        this.captainName = captainName;
+    public String getCaptainNickname() {
+        return captainNickname;
+    }
+
+    public void setCaptainNickname(String captainNickname) {
+        this.captainNickname = captainNickname;
     }
 
     public Integer getNumberOfPoints() {
@@ -66,8 +70,6 @@ public class PlayerImpl implements Serializable {
 
     public void addPoint(Integer points){
         numberOfPoints+=points;
-        if (numberOfPoints<0)
-            numberOfPoints=0;
     }
 
     public String getRoundAnswers() {

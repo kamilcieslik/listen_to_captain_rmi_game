@@ -2,23 +2,19 @@ package javafx.controller;
 
 import app.Main;
 import javafx.CustomMessageBox;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import rmi.impl.CaptainImpl;
-import rmi.impl.PlayerImpl;
-import rmi.impl.ServerImpl;
+import rmi.CaptainClient;
+import rmi.PlayerClient;
+import rmi.remote.impl.ServerImpl;
 
 import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -28,23 +24,23 @@ public class MainController implements Initializable {
     @FXML
     private Label labelServerStatus;
     @FXML
-    private TableView<PlayerImpl> tableViewPlayers;
+    private TableView<PlayerClient> tableViewPlayers;
     @FXML
-    private TableColumn<PlayerImpl, String> tableColumnPlayers_Nickname;
+    private TableColumn<PlayerClient, String> tableColumnPlayers_Nickname;
     @FXML
-    private TableColumn<PlayerImpl, String> tableColumnPlayers_Captain;
+    private TableColumn<PlayerClient, String> tableColumnPlayers_Captain;
     @FXML
-    private TableColumn<PlayerImpl, String> tableColumnPlayers_Type;
+    private TableColumn<PlayerClient, String> tableColumnPlayers_Type;
     @FXML
-    private TableColumn<PlayerImpl, Integer> tableColumnPlayers_Points;
+    private TableColumn<PlayerClient, Integer> tableColumnPlayers_Points;
 
 
     @FXML
-    private TableView<CaptainImpl> tableViewCaptains;
+    private TableView<CaptainClient> tableViewCaptains;
     @FXML
-    private TableColumn<CaptainImpl, String> tableColumnCaptains_Nickname;
+    private TableColumn<CaptainClient, String> tableColumnCaptains_Nickname;
     @FXML
-    private TableColumn<CaptainImpl, Integer> tableColumnCaptains_NumberOfPlayers;
+    private TableColumn<CaptainClient, Integer> tableColumnCaptains_NumberOfPlayers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,8 +51,8 @@ public class MainController implements Initializable {
     @FXML
     void buttonKickCaptain_onAction() throws RemoteException {
         if (tableViewCaptains.getSelectionModel().getSelectedItem() != null) {
-            CaptainImpl selectedCaptain = tableViewCaptains.getSelectionModel().getSelectedItem();
-            server.removeCommander(selectedCaptain.getName());
+            CaptainClient selectedCaptain = tableViewCaptains.getSelectionModel().getSelectedItem();
+            server.removeCommander(selectedCaptain.getName(), false);
            //  Main.captainObservableList.remove(selectedCaptain);
         } else
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
@@ -68,7 +64,7 @@ public class MainController implements Initializable {
     @FXML
     void buttonKickPlayer_onAction() throws RemoteException {
         if (tableViewPlayers.getSelectionModel().getSelectedItem() != null) {
-            PlayerImpl selectedPlayer = tableViewPlayers.getSelectionModel().getSelectedItem();
+            PlayerClient selectedPlayer = tableViewPlayers.getSelectionModel().getSelectedItem();
             server.removePlayer(selectedPlayer.getNickname());
            // Main.playerObservableList.remove(selectedPlayer);
         } else

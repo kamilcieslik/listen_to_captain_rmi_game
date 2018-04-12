@@ -1,6 +1,7 @@
-package rmi;
+package rmi.remote;
 
-import rmi.impl.PlayerImpl;
+import rmi.PlayerClient;
+import rmi.remote.impl.PlayerImpl;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -14,5 +15,5 @@ public interface Player extends Remote
     void startRound(int roundTime) throws RemoteException;
     void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException;
     void addPoints(Integer numberOfPoints) throws RemoteException;
-    void endOfGame(List<PlayerImpl> results);
+    void endOfGame(List<PlayerClient> results) throws RemoteException;
 }

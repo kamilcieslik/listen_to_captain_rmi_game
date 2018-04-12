@@ -1,10 +1,11 @@
-package rmi.impl;
+package rmi.remote.impl;
 
 import javafx.controller.MainController;
-import rmi.Captain;
-import rmi.Player;
-import rmi.Server;
-import rmi.SpaceCommand;
+import rmi.CaptainClient;
+import rmi.PlayerClient;
+import rmi.remote.Captain;
+import rmi.remote.Player;
+import rmi.remote.Server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,8 +17,8 @@ import java.util.Map;
 public class ServerImpl extends UnicastRemoteObject implements Server {
     private MainController serverMainController;
 
-    private HashMap<String, CaptainImpl> captains;
-    private HashMap<String, PlayerImpl> players;
+    private HashMap<String, CaptainClient> captains;
+    private HashMap<String, PlayerClient> players;
 
     public ServerImpl(MainController mainController) throws RemoteException {
         this.serverMainController = mainController;
@@ -27,16 +28,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void registerPlayer(Player connection, String type, String name, String commanderName) throws RemoteException {
-        CaptainImpl connectedCommander = captains.get(commanderName);
-        PlayerImpl player = new PlayerImpl(connection, type, name, commanderName);
+        CaptainClient connectedCommander = captains.get(commanderName);
+        PlayerClient player = new PlayerClient(connection, type, name, commanderName);
         players.put(name, player);
 
         Integer numberOfCaptainPlayers = 0;
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(commanderName))
                 numberOfCaptainPlayers++;
 
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(commanderName))
                 entry.getValue().getConnection().updateNumberOfPlayers(numberOfCaptainPlayers);
 
@@ -51,7 +52,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void registerCommander(Captain connection, String name) throws RemoteException {
         try {
-            CaptainImpl commander = new CaptainImpl(connection, name);
+            CaptainClient commander = new CaptainClient(connection, name);
             captains.put(name, commander);
             serverMainController.refreshCaptainsList();
         } catch (Exception e) {
@@ -61,18 +62,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void removePlayer(String name) throws RemoteException {
-        PlayerImpl player = players.get(name);
-        CaptainImpl connectedCommander = null;
+        PlayerClient player = players.get(name);
+        CaptainClient connectedCommander = null;
         if (captains.containsKey(player.getCaptainNickname()))
             connectedCommander = captains.get(player.getCaptainNickname());
         players.remove(name);
 
         Integer numberOfCaptainPlayers = 0;
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(player.getCaptainNickname()))
                 numberOfCaptainPlayers++;
 
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(player.getCaptainNickname()))
                 entry.getValue().getConnection().updateNumberOfPlayers(numberOfCaptainPlayers);
 
@@ -87,7 +88,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public List<String> getListOfCommanders() throws RemoteException {
         List<String> commandersNames = new ArrayList<>();
-        for (Map.Entry<String, CaptainImpl> entry : captains.entrySet()) {
+        for (Map.Entry<String, CaptainClient> entry : captains.entrySet()) {
             commandersNames.add(entry.getValue().getName());
         }
         return commandersNames;
@@ -106,7 +107,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void removeCommander(String name, Boolean endOfGame) throws RemoteException {
-        List<PlayerImpl> captainsPlayers = createPlayersList(name);
+        List<PlayerClient> captainsPlayers = createPlayersList(name);
         captains.remove(name);
         captainsPlayers.forEach(player -> {
             try {
@@ -128,17 +129,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         //commander.getConnection().receiveScore(score);
     }
 
-    @Override
-    public void broadcastCommand(SpaceCommand spaceCommand) throws RemoteException {
-
-    }
 
 
-    private List<PlayerImpl> createPlayersList(String captain) {
-        List<PlayerImpl> captainPlayers = new ArrayList<>();
+    private List<PlayerClient> createPlayersList(String captain) {
+        List<PlayerClient> captainPlayers = new ArrayList<>();
 
         try {
-            for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+            for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
                 if (entry.getValue().getCaptainNickname().equals(captain))
                     captainPlayers.add(entry.getValue());
             }
@@ -149,9 +146,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return captainPlayers;
     }
 
-    public List<CaptainImpl> getCommanders() throws RemoteException {
-        List<CaptainImpl> captainsWithNotStartedGame = new ArrayList<>();
-        for (Map.Entry<String, CaptainImpl> entry : captains.entrySet()) {
+    public List<CaptainClient> getCommanders() throws RemoteException {
+        List<CaptainClient> captainsWithNotStartedGame = new ArrayList<>();
+        for (Map.Entry<String, CaptainClient> entry : captains.entrySet()) {
             if (!entry.getValue().getActiveGame())
                 captainsWithNotStartedGame.add(entry.getValue());
         }
@@ -161,7 +158,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void startRound(int roundTime, String captainNickname) throws RemoteException {
         captains.get(captainNickname).setActiveGame(true);
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().getConnection().startRound(roundTime);
         }
@@ -169,13 +166,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void broadcastCommand(String playerType, String command, String captainName) throws RemoteException {
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
             if (entry.getValue().getType().equals(playerType) && entry.getValue().getCaptainNickname().equals(captainName))
                 entry.getValue().getConnection().receiveCommand(command);
         }
     }
 
-    public HashMap<String, PlayerImpl> getPlayers() {
+    public HashMap<String, PlayerClient> getPlayers() {
         return players;
     }
 
@@ -187,7 +184,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void clearRoundAnswers(String captainNickname) throws RemoteException {
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().setRoundAnswers("");
         }
@@ -203,8 +200,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public void finishTheGame(String captainNickname, List<PlayerImpl> results) throws RemoteException {
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+    public void finishTheGame(String captainNickname, List<PlayerClient> results) throws RemoteException {
+        for (Map.Entry<String, PlayerClient> entry : players.entrySet())
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().getConnection().endOfGame(results);
 

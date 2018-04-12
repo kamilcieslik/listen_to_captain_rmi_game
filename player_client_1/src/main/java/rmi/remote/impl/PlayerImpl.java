@@ -1,10 +1,10 @@
-package rmi.impl;
+package rmi.remote.impl;
 
 import javafx.application.Platform;
 import javafx.controller.MainController;
-import rmi.Player;
-import rmi.Server;
-import rmi.SpaceCommand;
+import rmi.PlayerClient;
+import rmi.remote.Player;
+import rmi.remote.Server;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -73,7 +73,7 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     }
 
     @Override
-    public void endOfGame(List<PlayerImpl> results) {
+    public void endOfGame(List<PlayerClient> results) {
         playerMainController.endOfGame(results);
     }
 }

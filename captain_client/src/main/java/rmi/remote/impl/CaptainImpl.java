@@ -1,8 +1,9 @@
-package rmi.impl;
+package rmi.remote.impl;
 
 import javafx.controller.MainController;
-import rmi.Captain;
-import rmi.Server;
+import rmi.PlayerClient;
+import rmi.remote.Captain;
+import rmi.remote.Server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -33,7 +34,7 @@ public class CaptainImpl extends UnicastRemoteObject implements Captain {
     }
 
     @Override
-    public void receivePlayerList(List<PlayerImpl> players, Boolean playerHasBeenRemoved) throws RemoteException {
+    public void receivePlayerList(List<PlayerClient> players, Boolean playerHasBeenRemoved) throws RemoteException {
         captainMainController.refreshTableView(players, playerHasBeenRemoved);
     }
 
