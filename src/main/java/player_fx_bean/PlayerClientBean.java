@@ -127,7 +127,7 @@ public class PlayerClientBean extends VBox implements Serializable {
             roundAnswers += "- ładowanie pocisku: " + labelDevice3Player3_Message.getText() + ".\n";
         }
 
-        return  roundAnswers;
+        return roundAnswers;
     }
 
     public void initPlayerAndCaptainNicknames(String nickname, String captainNickname, String panelName) {
@@ -221,8 +221,13 @@ public class PlayerClientBean extends VBox implements Serializable {
         booleanPropertyKickFromServer.addListener((o, oldVal, newVal) -> {
             if (!newVal)
                 labelGameStatus.setText("Status aktywnej gry: połączono.");
-            else
+            else{
                 labelGameStatus.setText("Status aktywnej gry: zostałeś wyrzucony z gry.");
+                labelCaptainNick.setText("---");
+                integerPropertyNumberOfPlayers.setValue(0);
+                integerPropertyNumberOfPoints.setValue(0);
+                initNewRoundComponentsValues();
+            }
         });
 
         textFieldDevice2Player2_Parameter2_Value.textProperty().addListener((o, oldVal, newVal) -> {
