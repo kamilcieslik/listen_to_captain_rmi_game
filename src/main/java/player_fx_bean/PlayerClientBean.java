@@ -41,6 +41,7 @@ public class PlayerClientBean extends VBox implements Serializable {
     private final BooleanProperty typeOfTriggerMechanism_1 = new SimpleBooleanProperty(false);
     private final BooleanProperty typeOfTriggerMechanism_2 = new SimpleBooleanProperty(false);
     private final BooleanProperty booleanPropertyLoadBullet = new SimpleBooleanProperty(false);
+    private final BooleanProperty booleanPropertyEndOfGame = new SimpleBooleanProperty(true);
 
     @FXML
     private Label labelPlayerNick, labelCaptainNick, labelNumberOfPlayers, labelNumberOfPoints, labelPanelName,
@@ -74,6 +75,7 @@ public class PlayerClientBean extends VBox implements Serializable {
         addPropertyListeners();
 
         booleanPropertyKickFromServer.setValue(false);
+        booleanPropertyEndOfGame.setValue(false);
         buttonDevice3Player3.setOnAction(event -> booleanPropertyLoadBullet.setValue(true));
 
         initNewRoundComponentsValues();
@@ -228,6 +230,12 @@ public class PlayerClientBean extends VBox implements Serializable {
                 integerPropertyNumberOfPoints.setValue(0);
                 initNewRoundComponentsValues();
             }
+        });
+
+        booleanPropertyEndOfGame.addListener((o, oldVal, newVal) -> {
+            if (newVal)
+                labelGameStatus.setText("Status aktywnej gry: rozgrywka zakończona.");
+                initNewRoundComponentsValues();
         });
 
         textFieldDevice2Player2_Parameter2_Value.textProperty().addListener((o, oldVal, newVal) -> {
