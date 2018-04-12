@@ -41,8 +41,8 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     }
 
     @Override
-    public void receiveCommand(SpaceCommand command) throws RemoteException {
-        System.out.println("Received command " + command.getType() + " " + command.getParameters() + ".");
+    public void receiveCommand(String command) throws RemoteException {
+        playerMainController.getPlayerBeanType_1().setStringPropertyCaptainCommand(command);
         //String text = spaceCommand.getType().name() + " " + spaceCommand.getParameters().toString();
         //controller.textField.setText(text);
         //controller.CurrentCommand = spaceCommand;

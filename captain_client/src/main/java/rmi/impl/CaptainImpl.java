@@ -33,8 +33,8 @@ public class CaptainImpl extends UnicastRemoteObject implements Captain {
     }
 
     @Override
-    public void receivePlayerList(List<PlayerImpl> players) throws RemoteException {
-        captainMainController.refreshTableView(players);
+    public void receivePlayerList(List<PlayerImpl> players, Boolean playerHasBeenRemoved) throws RemoteException {
+        captainMainController.refreshTableView(players, playerHasBeenRemoved);
     }
 
     @Override

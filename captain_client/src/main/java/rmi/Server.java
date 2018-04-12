@@ -18,4 +18,6 @@ public interface Server extends Remote
     void broadcastCommand(String playerType, String command, String captainName) throws RemoteException;
 
     void startRound(int roundTime, String captainNickname) throws RemoteException;
+
+    void clearRoundAnswers(String captainNickname) throws RemoteException;
 }

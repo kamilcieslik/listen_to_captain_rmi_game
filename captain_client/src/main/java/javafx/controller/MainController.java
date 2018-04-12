@@ -2,16 +2,17 @@ package javafx.controller;
 
 import app.Main;
 import javafx.CustomMessageBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import rmi.impl.CaptainImpl;
 import rmi.impl.PlayerImpl;
 
@@ -26,6 +27,8 @@ public class MainController implements Initializable {
     private Boolean playersType1 = false;
     private Boolean playersType2 = false;
     private Boolean playersType3 = false;
+    private Boolean showPlayerAnswers = true;
+    private Boolean gameHasBeenStarted = false;
     private Integer currentNumberOfPlayers;
 
     private IntegerProperty timeToEndOfRound = new SimpleIntegerProperty(0);
@@ -103,14 +106,27 @@ public class MainController implements Initializable {
                         Main.server.broadcastCommand("Laboratorium paliw rakietowych", textFieldPlayer2Command.getText(), Main.captainNickname);
                     if (playersType3)
                         Main.server.broadcastCommand("Działko bojowe", textFieldPlayer3Command.getText(), Main.captainNickname);
-
-                    Main.server.startRound(Integer.parseInt(labelTimeToEndOfRound.getText()), Main.captainNickname);
-
-                    Main.playerObservableList.forEach(player -> player.setRoundAnswers(""));
+                    gameHasBeenStarted = true;
+                    Main.server.startRound(Integer.parseInt(textFieldRoundTime.getText()), Main.captainNickname);
+                    activateRound(Integer.parseInt(textFieldRoundTime.getText()));
                 } catch (RemoteException e) {
+                    e.printStackTrace();
                     customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                             "Nie możesz rozpocząć rundy.",
                             "Powód: błąd połączenia z serwerem.").showAndWait();
+                }
+            } else if (gameHasBeenStarted) {
+                try {
+                    Main.server.removeCommander(Main.captainNickname);
+                    Main.server = null;
+                    labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
+                    customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                            "Gra została przerwana.",
+                            "Powód: zbyt duża ilość graczy opuściła grę.").showAndWait();
+                } catch (RemoteException e) {
+                    customMessageBox.showMessageBox(Alert.AlertType.ERROR, "BŁĄD KRYTYCZNY",
+                            "Gra została przerwana.",
+                            "Powód: utracono połączenie z serwerem.").showAndWait();
                 }
             } else
                 customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
@@ -125,7 +141,7 @@ public class MainController implements Initializable {
 
     @FXML
     void tableViewPlayers_onMouseClicked() {
-        if (tableViewPlayers.getSelectionModel().getSelectedItem() != null)
+        if (tableViewPlayers.getSelectionModel().getSelectedItem() != null && showPlayerAnswers)
             textAreaPlayerResults.setText(tableViewPlayers.getSelectionModel().getSelectedItem().getRoundAnswers());
     }
 
@@ -147,9 +163,29 @@ public class MainController implements Initializable {
         tableViewPlayers.setItems(Main.playerObservableList);
     }
 
-    public void refreshTableView(List<PlayerImpl> playerList) {
+    public void refreshTableView(List<PlayerImpl> playerList, Boolean playerHasBeenRemoved) {
         Main.playerObservableList.clear();
         Main.playerObservableList.addAll(playerList);
+        if (playerHasBeenRemoved) {
+            Platform.runLater(() -> {
+                textAreaPlayerResults.setText("");
+                if (Main.playerObservableList.size() < 2 && gameHasBeenStarted) {
+                    try {
+                        Main.server.removeCommander(Main.captainNickname);
+                    } catch (RemoteException ignored) {
+                    }
+
+                    Main.server = null;
+                    labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
+                    customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                            "Gra została przerwana.",
+                            "Powód: zbyt duża ilość graczy opuściła grę.").showAndWait();
+                } else
+                    customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                            "Serwer odświeżył listę graczy.",
+                            "Powód: jeden z graczy wyszedł z gry.").showAndWait();
+            });
+        }
     }
 
     private void prepareComponents(String gameStatus) {
@@ -161,7 +197,6 @@ public class MainController implements Initializable {
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
                 labelRoundStatus.setText("Status rundy - nie rozpoczęto gry");
-                timeToEndOfRound.setValue(0);
                 break;
             case "beforeRound":
                 buttonPlayerPointsForRound.setDisable(true);
@@ -170,7 +205,6 @@ public class MainController implements Initializable {
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
                 labelRoundStatus.setText("Status rundy - nie rozpoczęto (wydaj rozkazy)");
-                timeToEndOfRound.setValue(0);
                 break;
             case "activeRound":
                 buttonPlayerPointsForRound.setDisable(true);
@@ -179,20 +213,35 @@ public class MainController implements Initializable {
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
                 labelRoundStatus.setText("Status rundy - aktywna");
-                timeToEndOfRound.setValue(Integer.valueOf(textFieldRoundTime.getText()));
+                showPlayerAnswers = false;
                 break;
             case "afterRound":
                 buttonPlayerPointsForRound.setDisable(false);
-                buttonStartRound.setDisable(true);
+                buttonStartRound.setDisable(false);
                 textAreaPlayerResults.setText("");
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
-                textFieldPlayer1Command.setText("");
-                textFieldPlayer2Command.setText("");
-                textFieldPlayer3Command.setText("");
-                labelRoundStatus.setText("Status rundy - przyznaj punkty");
-                timeToEndOfRound.setValue(0);
+                labelRoundStatus.setText("Status rundy - przyznawanie punktów, oczekiwanie na rozpoczęcie kolejnej");
+                showPlayerAnswers = true;
                 break;
         }
+    }
+
+    private void activateRound(Integer roundTime) throws RemoteException {
+        Timeline timeline = new Timeline();
+        timeToEndOfRound.setValue(roundTime);
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
+            timeToEndOfRound.setValue(timeToEndOfRound.getValue() - 1);
+            if (timeToEndOfRound.getValue() <= 0) {
+                timeline.stop();
+                prepareComponents("afterRound");
+            }
+        });
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(frame);
+        timeline.play();
+        prepareComponents("activeRound");
+        Main.server.clearRoundAnswers(Main.captainNickname);
     }
 }

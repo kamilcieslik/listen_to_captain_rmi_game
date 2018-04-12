@@ -43,8 +43,6 @@ public class MainController implements Initializable {
         Timeline timeline = new Timeline();
         timeToEndOfRound = roundTime;
         KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
-            playerBeanType_1.setIntegerPropertyTimeToEndOfRound(timeToEndOfRound);
-            timeToEndOfRound--;
             if (timeToEndOfRound <= 0) {
                 try {
                     Main.server.sendPlayerAnswer(playerBeanType_1.getPlayerAnswers(1), Main.nickname, Main.captainNickname);
@@ -54,11 +52,19 @@ public class MainController implements Initializable {
                 }
                 timeline.stop();
                 playerBeanType_1.initNewRoundComponentsValues();
+                playerBeanType_1.setStringPropertyCaptainCommand("");
             }
+
+            playerBeanType_1.setIntegerPropertyTimeToEndOfRound(timeToEndOfRound);
+            timeToEndOfRound--;
         });
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
         timeline.play();
+    }
+
+    public PlayerClientBean getPlayerBeanType_1() {
+        return playerBeanType_1;
     }
 }

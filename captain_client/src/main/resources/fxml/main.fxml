@@ -204,7 +204,7 @@
                                     <Font size="16.0" />
                                 </font>
                             </Label>
-                            <TextField fx:id="textFieldRoundTime" editable="false" prefHeight="25.0" prefWidth="194.0" style="-fx-background-radius: 10;">
+                            <TextField fx:id="textFieldRoundTime" prefHeight="25.0" prefWidth="194.0" style="-fx-background-radius: 10;">
                                 <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                 </HBox.margin>
@@ -341,7 +341,7 @@
                         </Label>
                     </HBox>
                     <HBox alignment="CENTER">
-                        <Label fx:id="labelRoundStatus" alignment="CENTER" minWidth="74.0" prefHeight="25.0" prefWidth="297.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Status gry - nierozpoczęta" textFill="WHITE">
+                        <Label fx:id="labelRoundStatus" alignment="CENTER" minWidth="74.0" prefHeight="25.0" prefWidth="854.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4);" text="Status gry - nierozpoczęta" textFill="WHITE">
                             <font>
                                 <Font size="16.0" />
                             </font>

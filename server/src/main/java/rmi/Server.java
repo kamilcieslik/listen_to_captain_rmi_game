@@ -22,4 +22,5 @@ public interface Server extends Remote
     List<CaptainImpl> getCommanders() throws RemoteException;
     void startRound(int roundTime, String captainNickname) throws RemoteException;
     void sendPlayerAnswer(String playerAnswers, String playerNickname, String captainNickname) throws  RemoteException;
+    void clearRoundAnswers(String captainNickname) throws RemoteException;
 }

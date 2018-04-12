@@ -32,7 +32,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         players.put(name, player);
         if (connectedCommander != null) {
             connectedCommander.incrementNumberOfPlayers();
-            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()));
+            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), false);
         }
         serverMainController.refreshPlayersList();
         serverMainController.refreshCaptainsList();
@@ -41,9 +41,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void registerCommander(Captain connection, String name) throws RemoteException {
         try {
-            System.out.println("Commander " + name + " has connected.");
             CaptainImpl commander = new CaptainImpl(connection, name);
-            commander.getConnection().receiveScore(2137);
             captains.put(name, commander);
             serverMainController.refreshCaptainsList();
         } catch (Exception e) {
@@ -60,7 +58,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         players.remove(name);
         if (connectedCommander != null) {
             connectedCommander.decrementNumberOfPlayers();
-            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()));
+            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), true);
         }
         serverMainController.refreshPlayersList();
         serverMainController.refreshCaptainsList();
@@ -161,6 +159,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void sendPlayerAnswer(String playerAnswers, String playerNickname, String captainNickname) throws RemoteException {
+        players.get(playerNickname).setRoundAnswers(playerAnswers);
         captains.get(captainNickname).getConnection().addPlayerRoundAnswers(playerAnswers, playerNickname);
+    }
+
+    @Override
+    public void clearRoundAnswers(String captainNickname) throws RemoteException {
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+            if (entry.getValue().getCaptainNickname().equals(captainNickname))
+                entry.getValue().setRoundAnswers("");
+        }
+        captains.get(captainNickname).getConnection().receivePlayerList(createPlayersList(captainNickname), false);
     }
 }
