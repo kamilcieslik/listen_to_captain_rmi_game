@@ -223,7 +223,7 @@ public class PlayerClientBean extends VBox implements Serializable {
                 labelGameStatus.setText("Status aktywnej gry: połączono.");
             else{
                 labelGameStatus.setText("Status aktywnej gry: zostałeś wyrzucony z gry.");
-                labelCaptainNick.setText("---");
+                stringPropertyCaptainNickname.setValue("---");
                 integerPropertyNumberOfPlayers.setValue(0);
                 integerPropertyNumberOfPoints.setValue(0);
                 initNewRoundComponentsValues();
