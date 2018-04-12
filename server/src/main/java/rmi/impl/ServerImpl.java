@@ -105,12 +105,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 
     @Override
-    public void removeCommander(String name) throws RemoteException {
+    public void removeCommander(String name, Boolean endOfGame) throws RemoteException {
         List<PlayerImpl> captainsPlayers = createPlayersList(name);
         captains.remove(name);
         captainsPlayers.forEach(player -> {
             try {
-                player.getConnection().lossConnectionWithServer();
+                if (!endOfGame)
+                    player.getConnection().lossConnectionWithServer();
                 players.remove(player.getNickname());
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -191,5 +192,22 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
                 entry.getValue().setRoundAnswers("");
         }
         captains.get(captainNickname).getConnection().receivePlayerList(createPlayersList(captainNickname), false);
+    }
+
+    @Override
+    public void addPoint(String captainNickname, String playerNickname, Integer numberOfPoints) throws RemoteException {
+        players.get(playerNickname).addPoint(numberOfPoints);
+        players.get(playerNickname).getConnection().addPoints(numberOfPoints);
+        serverMainController.refreshPlayersList();
+        captains.get(captainNickname).getConnection().receivePlayerList(createPlayersList(captainNickname), false);
+    }
+
+    @Override
+    public void finishTheGame(String captainNickname, List<PlayerImpl> results) throws RemoteException {
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet())
+            if (entry.getValue().getCaptainNickname().equals(captainNickname))
+                entry.getValue().getConnection().endOfGame(results);
+
+        removeCommander(captainNickname, true);
     }
 }

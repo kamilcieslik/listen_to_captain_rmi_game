@@ -70,8 +70,6 @@ public class PlayerImpl implements  Serializable {
 
     public void addPoint(Integer points){
         numberOfPoints+=points;
-        if (numberOfPoints<0)
-            numberOfPoints=0;
     }
 
     public String getRoundAnswers() {

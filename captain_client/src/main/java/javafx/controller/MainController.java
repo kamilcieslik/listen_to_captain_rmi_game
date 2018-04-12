@@ -13,29 +13,29 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import rmi.impl.CaptainImpl;
 import rmi.impl.PlayerImpl;
 
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
     private CustomMessageBox customMessageBox;
-    private CaptainImpl captain;
     private Boolean playersType1 = false;
     private Boolean playersType2 = false;
     private Boolean playersType3 = false;
     private Boolean showPlayerAnswers = true;
     private Boolean gameHasBeenStarted = false;
-    private Integer currentNumberOfPlayers;
+    private Integer secondsToEndOfRound = 0;
 
     private IntegerProperty timeToEndOfRound = new SimpleIntegerProperty(0);
 
     @FXML
-    private Label labelCaptainPanel, labelPanelName, labelCaptainCommand, labelTimeToEndOfRound, labelRoundStatus,
-            labelConnectionStatus;
+    private Label labelCaptainPanel, labelTimeToEndOfRound, labelRoundStatus, labelConnectionStatus;
 
     @FXML
     private TableView<PlayerImpl> tableViewPlayers;
@@ -57,7 +57,7 @@ public class MainController implements Initializable {
             textFieldPlayer2Command, textFieldPlayer3Command;
 
     @FXML
-    private Button buttonPlayerPointsForRound, buttonStartRound;
+    private Button buttonPlayerPointsForRound, buttonStartRound, buttonEndGame;
 
     public void addPlayerRoundAnswers(String answers, String playerNickname) {
         Main.playerObservableList.stream().filter(player -> player.getNickname().equals(playerNickname)).findFirst()
@@ -77,12 +77,45 @@ public class MainController implements Initializable {
 
     @FXML
     void buttonEndGame_onAction() {
-
+        try {
+            Main.server.finishTheGame(Main.captainNickname, Main.playerObservableList
+                    .stream().sorted(Comparator.comparing(PlayerImpl::getNumberOfPoints)).collect(Collectors.toList()));
+            Main.playerObservableList.clear();
+            Main.server = null;
+            labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
+            labelRoundStatus.setText("Wysłano wyniki, zakończono grę.");
+        } catch (RemoteException e) {
+            customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                    "Nie możesz rozpocząć rundy.",
+                    "Powód: błąd połączenia z serwerem.").showAndWait();
+        }
     }
 
     @FXML
     void buttonPlayerPointsForRound_onAction() {
-
+        if (showPlayerAnswers) {
+            if (tableViewPlayers.getSelectionModel().getSelectedItem() != null) {
+                if (textFieldPlayerPointsForRound.getText().matches("^-?[1-9][0-9]*$")) {
+                    try {
+                        Main.server.addPoint(Main.captainNickname, tableViewPlayers.getSelectionModel().getSelectedItem()
+                                .getNickname(), Integer.valueOf(textFieldPlayerPointsForRound.getText()));
+                    } catch (RemoteException e) {
+                        customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                                "Nie możesz rozpocząć rundy.",
+                                "Powód: błąd połączenia z serwerem.").showAndWait();
+                    }
+                } else
+                    customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                            "Punkty nie zostaną przydzielone.",
+                            "Powód: niepoprawny format punktacji.").showAndWait();
+            } else
+                customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                        "Punkty nie zostaną przydzielone.",
+                        "Powód: nie zaznaczono gracza.").showAndWait();
+        } else
+            customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
+                    "Punkty nie zostaną przydzielone.",
+                    "Powód: nie jesteś w trybie przyznawania punktów.").showAndWait();
     }
 
     @FXML
@@ -115,8 +148,7 @@ public class MainController implements Initializable {
                             "Nie możesz rozpocząć rundy.",
                             "Powód: błąd połączenia z serwerem.").showAndWait();
                 }
-            }
-            else
+            } else
                 customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                         "Nie można rozpocząć gry.",
                         "Powód: zbyt mała ilość graczy (min. 2).").showAndWait();
@@ -137,7 +169,11 @@ public class MainController implements Initializable {
     public void exitFromApplication() {
         Platform.runLater(() -> {
             Main.server = null;
+            buttonPlayerPointsForRound.setDisable(true);
+            buttonStartRound.setDisable(true);
+            buttonEndGame.setDisable(true);
             labelConnectionStatus.setText("Status połączenia: rozłączono z serwerem.");
+            labelRoundStatus.setText("Status gry: zakończona");
             customMessageBox.showMessageBox(Alert.AlertType.ERROR, "BŁĄD KRYTYCZNY",
                     "Gra została przerwana.",
                     "Powód: utracono połączenie z serwerem.").showAndWait();
@@ -160,7 +196,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 if (Main.playerObservableList.size() < 2 && gameHasBeenStarted) {
                     try {
-                        Main.server.removeCommander(Main.captainNickname);
+                        Main.server.removeCommander(Main.captainNickname, false);
                     } catch (RemoteException ignored) {
                     }
 
@@ -186,7 +222,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
-                labelRoundStatus.setText("Status rundy - nie rozpoczęto gry");
+                labelRoundStatus.setText("Status rundy: nie rozpoczęto gry");
                 break;
             case "beforeRound":
                 buttonPlayerPointsForRound.setDisable(true);
@@ -194,7 +230,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
-                labelRoundStatus.setText("Status rundy - nie rozpoczęto (wydaj rozkazy)");
+                labelRoundStatus.setText("Status rundy: nie rozpoczęto (wydaj rozkazy)");
                 break;
             case "activeRound":
                 buttonPlayerPointsForRound.setDisable(true);
@@ -202,7 +238,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
-                labelRoundStatus.setText("Status rundy - aktywna");
+                labelRoundStatus.setText("Status rundy: aktywna");
                 showPlayerAnswers = false;
                 break;
             case "afterRound":
@@ -211,7 +247,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 textFieldPlayerPointsForRound.setText("");
                 textFieldRoundTime.setText("");
-                labelRoundStatus.setText("Status rundy - przyznawanie punktów, oczekiwanie na rozpoczęcie kolejnej");
+                labelRoundStatus.setText("Status rundy: punktacja/oczekiwanie na kolejną rundę");
                 showPlayerAnswers = true;
                 break;
         }
@@ -219,9 +255,11 @@ public class MainController implements Initializable {
 
     private void activateRound(Integer roundTime) throws RemoteException {
         Timeline timeline = new Timeline();
-        timeToEndOfRound.setValue(roundTime);
+        secondsToEndOfRound = roundTime;
         KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
-            timeToEndOfRound.setValue(timeToEndOfRound.getValue() - 1);
+            timeToEndOfRound.setValue(secondsToEndOfRound);
+            secondsToEndOfRound--;
+
             if (timeToEndOfRound.getValue() <= 0) {
                 timeline.stop();
                 prepareComponents("afterRound");

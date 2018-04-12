@@ -9,6 +9,7 @@ import rmi.SpaceCommand;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class PlayerImpl extends UnicastRemoteObject implements Player, Serializable {
     private static final long serialVersionUID = 1L;
@@ -61,6 +62,18 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
 
     @Override
     public void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException {
-        Platform.runLater(()->{playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers);});
+        Platform.runLater(()-> playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers));
+    }
+
+    @Override
+    public void addPoints(Integer numberOfPoints) throws RemoteException {
+        Platform.runLater(()-> playerMainController.getPlayerBeanType_1()
+                .setIntegerPropertyNumberOfPoints(playerMainController.getPlayerBeanType_1()
+                        .getIntegerPropertyNumberOfPoints()+numberOfPoints));
+    }
+
+    @Override
+    public void endOfGame(List<PlayerImpl> results) {
+        playerMainController.endOfGame(results);
     }
 }

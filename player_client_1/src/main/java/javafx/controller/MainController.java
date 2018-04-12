@@ -10,9 +10,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.util.Duration;
 import player_fx_bean.PlayerClientBean;
+import rmi.impl.PlayerImpl;
 
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -66,5 +68,14 @@ public class MainController implements Initializable {
 
     public PlayerClientBean getPlayerBeanType_1() {
         return playerBeanType_1;
+    }
+
+    public void endOfGame(List<PlayerImpl> results) {
+        Platform.runLater(() -> {
+            Main.server = null;
+            playerBeanType_1.booleanPropertyKickFromServerProperty().setValue(true);
+
+            // TODO:
+        });
     }
 }
