@@ -85,6 +85,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return players.containsKey(playerNickname);
     }
 
+
     @Override
     public void removeCommander(String name) throws RemoteException {
         List<PlayerImpl> captainsPlayers = createPlayersList(name);
@@ -110,11 +111,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void broadcastCommand(SpaceCommand spaceCommand) throws RemoteException {
-        System.out.println("Sending " + spaceCommand.getType() + " command.");
-        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
-            if (entry.getValue().getType() == spaceCommand.getType())
-                entry.getValue().getConnection().receiveCommand(spaceCommand);
-        }
+
     }
 
 
@@ -142,7 +139,28 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return captainsWithNotStartedGame;
     }
 
+    @Override
+    public void startRound(int roundTime, String captainNickname) throws RemoteException {
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+            if (entry.getValue().getCaptainNickname().equals(captainNickname))
+                entry.getValue().getConnection().startRound(roundTime);
+        }
+    }
+
+    @Override
+    public void broadcastCommand(String playerType, String command, String captainName) throws RemoteException {
+        for (Map.Entry<String, PlayerImpl> entry : players.entrySet()) {
+            if (entry.getValue().getType().equals(playerType) && entry.getValue().getCaptainNickname().equals(captainName))
+                entry.getValue().getConnection().receiveCommand(command);
+        }
+    }
+
     public HashMap<String, PlayerImpl> getPlayers() {
         return players;
+    }
+
+    @Override
+    public void sendPlayerAnswer(String playerAnswers, String playerNickname, String captainNickname) throws RemoteException {
+        captains.get(captainNickname).getConnection().addPlayerRoundAnswers(playerAnswers, playerNickname);
     }
 }

@@ -52,4 +52,9 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     public void lossConnectionWithServer() throws RemoteException {
         playerMainController.exitFromApplication();
     }
+
+    @Override
+    public void startRound(int roundTime) throws RemoteException {
+        playerMainController.startCountdownToTheEndOfRound(roundTime);
+    }
 }

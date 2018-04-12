@@ -46,4 +46,9 @@ public class CaptainImpl extends UnicastRemoteObject implements Captain {
     public void lossConnectionWithServer() throws RemoteException {
         captainMainController.exitFromApplication();
     }
+
+    @Override
+    public void addPlayerRoundAnswers(String playerAnswers, String playerNickname) throws RemoteException {
+        captainMainController.addPlayerRoundAnswers(playerAnswers, playerNickname);
+    }
 }

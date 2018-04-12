@@ -12,6 +12,7 @@ public class PlayerImpl implements Serializable {
     private String type;
     private String nickname;
     private Integer numberOfPoints;
+    private String roundAnswers = "";
 
     public PlayerImpl() {
     }
@@ -67,5 +68,13 @@ public class PlayerImpl implements Serializable {
         numberOfPoints+=points;
         if (numberOfPoints<0)
             numberOfPoints=0;
+    }
+
+    public String getRoundAnswers() {
+        return roundAnswers;
+    }
+
+    public void setRoundAnswers(String roundAnswers) {
+        this.roundAnswers = roundAnswers;
     }
 }

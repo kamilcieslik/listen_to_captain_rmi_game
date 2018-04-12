@@ -19,4 +19,6 @@ public interface Server extends Remote
     boolean isExistCaptainNickname(String captainNickname) throws RemoteException;
     boolean isExistPlayerNickname(String playerNickname) throws RemoteException;
     List<CaptainImpl> getCommanders() throws RemoteException;
+
+    void sendPlayerAnswer(String playerAnswers, String playerNickname, String captainNickname) throws  RemoteException;
 }

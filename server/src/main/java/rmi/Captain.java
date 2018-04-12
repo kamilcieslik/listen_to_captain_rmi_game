@@ -12,4 +12,6 @@ public interface Captain extends Remote
     void receivePlayerList(List<PlayerImpl> players) throws RemoteException;
     void receivePlayer(String player) throws RemoteException;
     void lossConnectionWithServer() throws RemoteException;
+
+    void addPlayerRoundAnswers(String playerAnswers, String playerNickname) throws RemoteException;
 }

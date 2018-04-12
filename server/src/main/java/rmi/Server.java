@@ -18,5 +18,8 @@ public interface Server extends Remote
     List<String> getListOfCommanders() throws RemoteException;
     boolean isExistCaptainNickname(String captainNickname) throws RemoteException;
     boolean isExistPlayerNickname(String playerNickname) throws RemoteException;
+    void broadcastCommand(String playerType, String command, String captainName) throws RemoteException;
     List<CaptainImpl> getCommanders() throws RemoteException;
+    void startRound(int roundTime, String captainNickname) throws RemoteException;
+    void sendPlayerAnswer(String playerAnswers, String playerNickname, String captainNickname) throws  RemoteException;
 }
