@@ -196,7 +196,7 @@ public class PlayerClientBean extends VBox implements Serializable {
         labelPanelName.textProperty().bind(stringPropertyPanelName);
         labelNumberOfPoints.textProperty().bind(integerPropertyNumberOfPoints.asString());
         labelNumberOfPlayers.textProperty().bind(integerPropertyNumberOfPlayers.asString());
-        labelRoundTime.textProperty().bind(integerPropertyTimeToEndOfRound.asString());
+        labelRoundTime.textProperty().bind(Bindings.format("%d s", integerPropertyTimeToEndOfRound));
         textFieldCaptainCommand.textProperty().bind(stringPropertyCaptainCommand);
         labelCaptainNick.textProperty().bind(stringPropertyCaptainNickname);
 
@@ -221,9 +221,9 @@ public class PlayerClientBean extends VBox implements Serializable {
         booleanPropertyKickFromServer.addListener((o, oldVal, newVal) -> {
             if (!newVal)
                 labelGameStatus.setText("Status aktywnej gry: połączono.");
-            else{
+            else {
                 labelGameStatus.setText("Status aktywnej gry: zostałeś wyrzucony z gry.");
-                labelCaptainNick.setText("---");
+                stringPropertyCaptainNickname.setValue("---");
                 integerPropertyNumberOfPlayers.setValue(0);
                 integerPropertyNumberOfPoints.setValue(0);
                 initNewRoundComponentsValues();
