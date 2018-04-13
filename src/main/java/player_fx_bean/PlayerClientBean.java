@@ -213,7 +213,7 @@ public class PlayerClientBean extends VBox implements Serializable {
         labelDevice2Player2_Parameter1_Value.textProperty().bind(integerPropertyNumberOfVentilators.asString());
         doublePropertyCombustionTemperature.bind(sliderDevice3Player2_Value.valueProperty());
         labelDevice2Player2_Parameter3_Value.textProperty().bind(Bindings.format("%.2f", doublePropertyEngineTemperature));
-        lavelDevice3Player2_Value.textProperty().bind(Bindings.format("%.0f °", doublePropertyCombustionTemperature));
+        lavelDevice3Player2_Value.textProperty().bind(Bindings.format("%.0f s", doublePropertyCombustionTemperature));
 
         // Gracz 3:
         typeOfTriggerMechanism_1.bind(radioButtonDevice2Player3_Option1.selectedProperty());
