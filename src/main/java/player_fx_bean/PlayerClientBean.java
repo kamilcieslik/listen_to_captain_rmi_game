@@ -604,4 +604,16 @@ public class PlayerClientBean extends VBox implements Serializable {
     public void setBooleanPropertyLoadBullet(boolean booleanPropertyLoadBullet) {
         this.booleanPropertyLoadBullet.set(booleanPropertyLoadBullet);
     }
+
+    public boolean isBooleanPropertyEndOfGame() {
+        return booleanPropertyEndOfGame.get();
+    }
+
+    public BooleanProperty booleanPropertyEndOfGameProperty() {
+        return booleanPropertyEndOfGame;
+    }
+
+    public void setBooleanPropertyEndOfGame(boolean booleanPropertyEndOfGame) {
+        this.booleanPropertyEndOfGame.set(booleanPropertyEndOfGame);
+    }
 }
