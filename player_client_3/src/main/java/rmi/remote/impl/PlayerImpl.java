@@ -29,7 +29,7 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
 
     @Override
     public void getCommand(String command) {
-        playerMainController.getPlayerBeanType_1().setStringPropertyCaptainCommand(command);
+        playerMainController.getPlayerBeanType_3().setStringPropertyCaptainCommand(command);
     }
 
     @Override
@@ -44,13 +44,13 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
 
     @Override
     public void updateNumberOfPlayers(int numberOfCaptainPlayers) {
-        Platform.runLater(()-> playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers));
+        Platform.runLater(()-> playerMainController.getPlayerBeanType_3().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers));
     }
 
     @Override
     public void addPoints(Integer numberOfPoints) {
-        Platform.runLater(()-> playerMainController.getPlayerBeanType_1()
-                .setIntegerPropertyNumberOfPoints(playerMainController.getPlayerBeanType_1()
+        Platform.runLater(()-> playerMainController.getPlayerBeanType_3()
+                .setIntegerPropertyNumberOfPoints(playerMainController.getPlayerBeanType_3()
                         .getIntegerPropertyNumberOfPoints()+numberOfPoints));
     }
 
