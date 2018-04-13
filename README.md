@@ -29,7 +29,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 2. Ekran główny #1.
 </p>
 <p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/cpTiwn/2.png" />
+<img height="405" width="676" src="https://image.ibb.co/cpTiwn/2.png" />
 </p>
 <p align="center">
 
@@ -37,7 +37,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 3. Ekran główny #2.
 </p>
 <p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/bymsp7/3.png" />
+<img height="756" width="684" src="https://image.ibb.co/bymsp7/3.png" />
 </p>
 <p align="center">
 
@@ -45,7 +45,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 4. Ekran główny #3.
 </p>
 <p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/fq13wn/4.png" />
+<img height="476" width="810" src="https://image.ibb.co/fq13wn/4.png" />
 </p>
 <p align="center">
 
