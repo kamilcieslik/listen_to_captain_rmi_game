@@ -101,7 +101,9 @@ public class ChooseNicknameAndCaptainController implements Initializable {
         }
     }
 
+
     @FXML
+    @SuppressWarnings("Duplicates")
     void buttonRefresh() {
         String url = "rmi://localhost/sserver";
         try {

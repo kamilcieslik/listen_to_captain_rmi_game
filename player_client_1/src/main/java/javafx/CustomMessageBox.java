@@ -31,6 +31,7 @@ public class CustomMessageBox {
      * @param content a {@link String} object.
      * @return a javafx.scene.control.Alert object.
      */
+    @SuppressWarnings("Duplicates")
     public Alert showMessageBox(Alert.AlertType alertType, String title, String header, String content) {
         Alert alert = new Alert(alertType);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();

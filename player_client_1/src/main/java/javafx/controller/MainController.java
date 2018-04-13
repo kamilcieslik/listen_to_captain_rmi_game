@@ -51,6 +51,7 @@ public class MainController implements Initializable {
         });
     }
 
+    @SuppressWarnings("Duplicates")
     public void startCountdownToTheEndOfRound(Integer roundTime) {
         Timeline timeline = new Timeline();
         timeToEndOfRound = roundTime;
