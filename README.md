@@ -18,7 +18,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 
 ### Zrzuty ekranu prezentujące działanie aplikacji:
 <p align="center">
-1. Inicjacja aplikacji.
+1. Panel serwera.
 </p>
 <p align="center">
 <img height="476" width="812" src="https://image.ibb.co/jA3u2S/1.png" />
@@ -26,7 +26,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 <p align="center">
 
 <p align="center">
-2. Ekran główny #1.
+2. Inicjacja panelu kapitana.
 </p>
 <p align="center">
 <img height="405" width="676" src="https://image.ibb.co/cpTiwn/2.png" />
@@ -34,7 +34,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 <p align="center">
 
 <p align="center">
-3. Ekran główny #2.
+3. Inicjacja panelu jednego z typów graczy.
 </p>
 <p align="center">
 <img height="756" width="684" src="https://image.ibb.co/bymsp7/3.png" />
@@ -42,7 +42,7 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 <p align="center">
 
 <p align="center">
-4. Ekran główny #3.
+4. Panel gracza typu - Sterownia silnika.
 </p>
 <p align="center">
 <img height="476" width="810" src="https://image.ibb.co/fq13wn/4.png" />
@@ -50,33 +50,33 @@ Java Beans zostanie poprawnie zaciągnięta z lokalnego repozytorium Mavena.
 <p align="center">
 
 <p align="center">
-5. Inicjacja aplikacji.
+5. Panel gracza typu - Działko bojowe.
 </p>
 <p align="center">
-<img height="549" width="1373" src="https://image.ibb.co/b71Q97/5.png" />
-</p>
-<p align="center">
-
-<p align="center">
-6. Ekran główny #1.
-</p>
-<p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/fNV7NS/6.png" />
+<img height="475" width="812" src="https://image.ibb.co/b71Q97/5.png" />
 </p>
 <p align="center">
 
 <p align="center">
-7. Ekran główny #2.
+6. Panel gracza typu - Laboratorium paliw rakietowych.
 </p>
 <p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/kYgE2S/7.png" />
+<img height="475" width="812" src="https://image.ibb.co/fNV7NS/6.png" />
 </p>
 <p align="center">
 
 <p align="center">
-8. Ekran główny #3.
+7. Panel kapitana.
 </p>
 <p align="center">
-<img height="750" width="1373" src="https://image.ibb.co/goyu2S/8.png" />
+<img height="475" width="816" src="https://image.ibb.co/kYgE2S/7.png" />
+</p>
+<p align="center">
+
+<p align="center">
+8. Zakończenie gry - prezentacja wyników.
+</p>
+<p align="center">
+<img height="474" width="810" src="https://image.ibb.co/goyu2S/8.png" />
 </p>
 <p align="center">
