@@ -31,17 +31,17 @@
            style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.25, 0, 0);"
            text="GRA WIELOOSOBOWA POLEGAJĄCA NA WYKONYWANIU ZADAŃ ZLECONYCH PRZEZ KAPITANA" textFill="WHITE">
         <font>
-            <Font nickname="System Bold" size="13.0"/>
+            <Font name="System Bold" size="13.0"/>
         </font>
         <VBox.margin>
             <Insets/>
         </VBox.margin>
     </Label>
     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="918.0"
-           style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.25, 0, 0);" text="WERSJA GRACZA III"
+           style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.25, 0, 0);" text="WERSJA GRACZA I"
            textAlignment="CENTER" textFill="#282828">
         <font>
-            <Font nickname="System Bold" size="13.0"/>
+            <Font name="System Bold" size="13.0"/>
         </font>
         <VBox.margin>
             <Insets top="-9.0"/>
