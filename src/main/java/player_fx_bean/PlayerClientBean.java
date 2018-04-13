@@ -52,7 +52,7 @@ public class PlayerClientBean extends VBox implements Serializable {
             labelDevice2Player2_Parameter3_Name, labelDevice2Player2_Parameter3_Value, labelDevice2Player2_Message,
             labelDevice3Player2_Name, labelDevice1Player3_Name, labelDevice1Player3_Message, labelDevice2Player3_Name,
             labelDevice2Player3_Message, labelDevice3Player3_Name, labelDevice3Player3_Message, labelGameStatus,
-            labelDevice3Player1_Value, labelDevice3Player2_Value;
+            labelDevice3Player1_Value, lavelDevice3Player2_Value;
     @FXML
     private TextField textFieldCaptainCommand, textFieldDevice1Player1_Value, textFieldDevice1Player2_Value,
             textFieldDevice2Player2_Parameter2_Value, textFieldDevice1Player3_Value;
@@ -100,7 +100,7 @@ public class PlayerClientBean extends VBox implements Serializable {
                 else
                     roundAnswers += "- tryb spalania paliwa: najwyższa wydajność przyrządów,\n";
             }
-            roundAnswers += "- kąt natarcia: " + String.valueOf(Math.round(getDoublePropertyAngleOfAttack())) + ".\n";
+            roundAnswers += "- kąt natarcia: " + labelDevice3Player1_Value.getText() + ".\n";
         } else if (playerType == 2) {
             if (!labelDevice1Player2_Message.getText().equals(""))
                 roundAnswers += "- temperatura spalania: nie udzielono odpowiedzi,\n";
@@ -112,7 +112,7 @@ public class PlayerClientBean extends VBox implements Serializable {
             else
                 roundAnswers += "- temperatura spalania: " + labelDevice2Player2_Parameter3_Value.getText() + ",\n";
 
-            roundAnswers += "- impuls jednostkowy: " + String.valueOf(Math.round(getDoublePropertyCombustionTemperature())) + ".\n";
+            roundAnswers += "- impuls jednostkowy: " + lavelDevice3Player2_Value.getText() + ".\n";
         } else if (playerType == 3) {
             if (!labelDevice1Player3_Message.getText().equals(""))
                 roundAnswers += "- ilość pocisków w magazynku: nie udzielono odpowiedzi,\n";
@@ -207,13 +207,13 @@ public class PlayerClientBean extends VBox implements Serializable {
         fuelCombustionMode_1.bind(radioButtonDevice2Player1_Option1.selectedProperty());
         fuelCombustionMode_2.bind(radioButtonDevice2Player1_Option2.selectedProperty());
         doublePropertyAngleOfAttack.bind(sliderDevice3Player1_Value.valueProperty());
-        labelDevice3Player1_Value.textProperty().bind(Bindings.format("%d ", doublePropertyAngleOfAttack));
+        labelDevice3Player1_Value.textProperty().bind(Bindings.format("%.0f °", doublePropertyAngleOfAttack));
 
         // Gracz 2:
         labelDevice2Player2_Parameter1_Value.textProperty().bind(integerPropertyNumberOfVentilators.asString());
         doublePropertyCombustionTemperature.bind(sliderDevice3Player2_Value.valueProperty());
         labelDevice2Player2_Parameter3_Value.textProperty().bind(Bindings.format("%.2f", doublePropertyEngineTemperature));
-        labelDevice3Player2_Value.textProperty().bind(Bindings.format("%d ", doublePropertyCombustionTemperature));
+        lavelDevice3Player2_Value.textProperty().bind(Bindings.format("%.0f °", doublePropertyCombustionTemperature));
 
         // Gracz 3:
         typeOfTriggerMechanism_1.bind(radioButtonDevice2Player3_Option1.selectedProperty());
