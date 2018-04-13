@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface Captain extends Remote
 {
-    void receiveScore(int score) throws RemoteException;
-    void receivePlayerList(List<PlayerClient> players, Boolean playerHasBeenRemoved) throws RemoteException;
-    void receivePlayer(String player) throws RemoteException;
+    void sendPlayerList(List<PlayerClient> players, Boolean playerHasBeenRemoved) throws RemoteException;
     void lossConnectionWithServer() throws RemoteException;
-
     void addPlayerRoundAnswers(String playerAnswers, String playerNickname) throws RemoteException;
 }

@@ -21,7 +21,7 @@ public class PlayerClient implements Serializable {
         this.connection = connection;
         this.type = type;
         this.nickname = nickname;
-        this.captainName=captainName;
+        this.captainName = captainName;
     }
 
     public Player getConnection() {
@@ -64,10 +64,10 @@ public class PlayerClient implements Serializable {
         this.numberOfPoints = numberOfPoints;
     }
 
-    public void addPoint(Integer points){
-        numberOfPoints+=points;
-        if (numberOfPoints<0)
-            numberOfPoints=0;
+    public void addPoint(Integer points) {
+        numberOfPoints += points;
+        if (numberOfPoints < 0)
+            numberOfPoints = 0;
     }
 
     public String getRoundAnswers() {

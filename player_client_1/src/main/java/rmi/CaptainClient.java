@@ -8,7 +8,7 @@ public class CaptainClient implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Captain connection;
-    public String name;
+    private String name;
     private Integer numberOfPlayers;
     private Boolean activeGame = false;
 

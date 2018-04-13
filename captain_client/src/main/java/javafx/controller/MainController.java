@@ -78,7 +78,7 @@ public class MainController implements Initializable {
     void buttonEndGame_onAction() {
         try {
             Main.server.finishTheGame(Main.captainNickname, Main.playerObservableList
-                    .stream().sorted(Comparator.comparing(PlayerClient::getNumberOfPoints)).collect(Collectors.toList()));
+                    .stream().sorted(Comparator.comparing(PlayerClient::getNumberOfPoints).reversed()).collect(Collectors.toList()));
             Main.playerObservableList.clear();
             textAreaPlayerResults.setText("");
             buttonPlayerPointsForRound.setDisable(true);
@@ -137,11 +137,11 @@ public class MainController implements Initializable {
 
                 try {
                     if (playersType1)
-                        Main.server.broadcastCommand("Sterownia silnika", textFieldPlayer1Command.getText(), Main.captainNickname);
+                        Main.server.sendCommand("Sterownia silnika", textFieldPlayer1Command.getText(), Main.captainNickname);
                     if (playersType2)
-                        Main.server.broadcastCommand("Laboratorium paliw rakietowych", textFieldPlayer2Command.getText(), Main.captainNickname);
+                        Main.server.sendCommand("Laboratorium paliw rakietowych", textFieldPlayer2Command.getText(), Main.captainNickname);
                     if (playersType3)
-                        Main.server.broadcastCommand("Działko bojowe", textFieldPlayer3Command.getText(), Main.captainNickname);
+                        Main.server.sendCommand("Działko bojowe", textFieldPlayer3Command.getText(), Main.captainNickname);
                     gameHasBeenStarted = true;
                     Main.server.startRound(Integer.parseInt(textFieldRoundTime.getText()), Main.captainNickname);
                     activateRound(Integer.parseInt(textFieldRoundTime.getText()));
@@ -199,7 +199,7 @@ public class MainController implements Initializable {
                 textAreaPlayerResults.setText("");
                 if (Main.playerObservableList.size() < 2 && gameHasBeenStarted) {
                     try {
-                        Main.server.removeCommander(Main.captainNickname, false);
+                        Main.server.removeCaptain(Main.captainNickname, false);
                     } catch (RemoteException ignored) {
                     }
 

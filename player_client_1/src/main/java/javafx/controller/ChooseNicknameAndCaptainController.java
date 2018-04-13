@@ -32,20 +32,16 @@ import java.util.logging.Logger;
 public class ChooseNicknameAndCaptainController implements Initializable {
     private CustomMessageBox customMessageBox;
     private ObservableList<CaptainClient> captainObservableList = FXCollections.observableArrayList();
-    Server server;
+    private Server server;
 
     @FXML
     private TextField textFieldNick;
-
     @FXML
     private Label labelNick;
-
     @FXML
     private TableView<CaptainClient> tableViewGames;
-
     @FXML
     private TableColumn<CaptainClient, String> tableColumnCaptain;
-
     @FXML
     private TableColumn<CaptainClient, Integer> tableColumnNumberOfPlayers;
 
@@ -73,7 +69,7 @@ public class ChooseNicknameAndCaptainController implements Initializable {
                 else if (tableViewGames.getSelectionModel().getSelectedItem() == null)
                     labelNick.setText("Nie wybrano gry.");
                 else {
-                    Main.captainNickname =  tableViewGames.getSelectionModel().getSelectedItem().getName();
+                    Main.captainNickname = tableViewGames.getSelectionModel().getSelectedItem().getName();
                     FXMLLoader loader = new FXMLLoader();
                     try {
                         loader.setLocation(getClass().getClassLoader().getResource("fxml/main.fxml"));
@@ -112,8 +108,7 @@ public class ChooseNicknameAndCaptainController implements Initializable {
             if (server == null) {
                 server = (Server) Naming.lookup(url);
             }
-            List list = new ArrayList();
-            list.addAll(server.getCommanders());
+            List list = new ArrayList(server.getCaptains());
             captainObservableList.clear();
             captainObservableList.addAll(list);
         } catch (RemoteException | NotBoundException | MalformedURLException e) {

@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import rmi.CaptainClient;
 import rmi.PlayerClient;
 import rmi.remote.impl.ServerImpl;
-
 import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -52,8 +51,7 @@ public class MainController implements Initializable {
     void buttonKickCaptain_onAction() throws RemoteException {
         if (tableViewCaptains.getSelectionModel().getSelectedItem() != null) {
             CaptainClient selectedCaptain = tableViewCaptains.getSelectionModel().getSelectedItem();
-            server.removeCommander(selectedCaptain.getName(), false);
-           //  Main.captainObservableList.remove(selectedCaptain);
+            server.removeCaptain(selectedCaptain.getName(), false);
         } else
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Operacja wyrzucenia kapitana z serwera nie powiedzie się.",
@@ -66,7 +64,6 @@ public class MainController implements Initializable {
         if (tableViewPlayers.getSelectionModel().getSelectedItem() != null) {
             PlayerClient selectedPlayer = tableViewPlayers.getSelectionModel().getSelectedItem();
             server.removePlayer(selectedPlayer.getNickname());
-           // Main.playerObservableList.remove(selectedPlayer);
         } else
             customMessageBox.showMessageBox(Alert.AlertType.WARNING, "Ostrzeżenie",
                     "Operacja wyrzucenia kapitana z serwera nie powiedzie się.",
@@ -76,7 +73,7 @@ public class MainController implements Initializable {
 
     public void refreshCaptainsList() throws RemoteException {
         Main.captainObservableList.clear();
-        Main.captainObservableList.addAll(server.getCommanders());
+        Main.captainObservableList.addAll(server.getCaptains());
     }
 
     public void refreshPlayersList(){
@@ -87,7 +84,7 @@ public class MainController implements Initializable {
     @FXML
     void buttonRefreshCaptains_onAction() throws RemoteException {
         Main.captainObservableList.clear();
-        Main.captainObservableList.addAll(server.getCommanders());
+        Main.captainObservableList.addAll(server.getCaptains());
     }
 
     @FXML

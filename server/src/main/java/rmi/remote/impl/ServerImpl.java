@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     private MainController serverMainController;
-
     private HashMap<String, CaptainClient> captains;
     private HashMap<String, PlayerClient> players;
 
@@ -27,7 +26,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public void registerPlayer(Player connection, String type, String name, String commanderName) throws RemoteException {
+    public void addPlayer(Player connection, String type, String name, String commanderName) throws RemoteException {
         CaptainClient connectedCommander = captains.get(commanderName);
         PlayerClient player = new PlayerClient(connection, type, name, commanderName);
         players.put(name, player);
@@ -43,14 +42,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         if (connectedCommander != null) {
             connectedCommander.incrementNumberOfPlayers();
-            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), false);
+            connectedCommander.getConnection().sendPlayerList(createPlayersList(player.getCaptainNickname()), false);
         }
         serverMainController.refreshPlayersList();
         serverMainController.refreshCaptainsList();
     }
 
     @Override
-    public void registerCommander(Captain connection, String name) throws RemoteException {
+    public void addCaptain(Captain connection, String name) {
         try {
             CaptainClient commander = new CaptainClient(connection, name);
             captains.put(name, commander);
@@ -79,34 +78,24 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         if (connectedCommander != null) {
             connectedCommander.decrementNumberOfPlayers();
-            connectedCommander.getConnection().receivePlayerList(createPlayersList(player.getCaptainNickname()), true);
+            connectedCommander.getConnection().sendPlayerList(createPlayersList(player.getCaptainNickname()), true);
         }
         serverMainController.refreshPlayersList();
         serverMainController.refreshCaptainsList();
     }
 
     @Override
-    public List<String> getListOfCommanders() throws RemoteException {
-        List<String> commandersNames = new ArrayList<>();
-        for (Map.Entry<String, CaptainClient> entry : captains.entrySet()) {
-            commandersNames.add(entry.getValue().getName());
-        }
-        return commandersNames;
-    }
-
-    @Override
-    public boolean isExistCaptainNickname(String captainNickname) throws RemoteException {
+    public boolean isExistCaptainNickname(String captainNickname) {
         return captains.containsKey(captainNickname);
     }
 
     @Override
-    public boolean isExistPlayerNickname(String playerNickname) throws RemoteException {
+    public boolean isExistPlayerNickname(String playerNickname) {
         return players.containsKey(playerNickname);
     }
 
-
     @Override
-    public void removeCommander(String name, Boolean endOfGame) throws RemoteException {
+    public void removeCaptain(String name, Boolean endOfGame) throws RemoteException {
         List<PlayerClient> captainsPlayers = createPlayersList(name);
         captains.remove(name);
         captainsPlayers.forEach(player -> {
@@ -123,30 +112,21 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         serverMainController.refreshCaptainsList();
     }
 
-    @Override
-    public void broadcastScore(int score) throws RemoteException {
-        System.out.println("Score changed by " + score);
-        //commander.getConnection().receiveScore(score);
-    }
-
-
-
     private List<PlayerClient> createPlayersList(String captain) {
         List<PlayerClient> captainPlayers = new ArrayList<>();
-
         try {
             for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
                 if (entry.getValue().getCaptainNickname().equals(captain))
                     captainPlayers.add(entry.getValue());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {
 
+        }
         return captainPlayers;
     }
 
-    public List<CaptainClient> getCommanders() throws RemoteException {
+    @Override
+    public List<CaptainClient> getCaptains() {
         List<CaptainClient> captainsWithNotStartedGame = new ArrayList<>();
         for (Map.Entry<String, CaptainClient> entry : captains.entrySet()) {
             if (!entry.getValue().getActiveGame())
@@ -165,10 +145,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public void broadcastCommand(String playerType, String command, String captainName) throws RemoteException {
+    public void sendCommand(String playerType, String command, String captainName) throws RemoteException {
         for (Map.Entry<String, PlayerClient> entry : players.entrySet()) {
             if (entry.getValue().getType().equals(playerType) && entry.getValue().getCaptainNickname().equals(captainName))
-                entry.getValue().getConnection().receiveCommand(command);
+                entry.getValue().getConnection().getCommand(command);
         }
     }
 
@@ -188,7 +168,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().setRoundAnswers("");
         }
-        captains.get(captainNickname).getConnection().receivePlayerList(createPlayersList(captainNickname), false);
+        captains.get(captainNickname).getConnection().sendPlayerList(createPlayersList(captainNickname), false);
     }
 
     @Override
@@ -196,7 +176,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         players.get(playerNickname).addPoint(numberOfPoints);
         players.get(playerNickname).getConnection().addPoints(numberOfPoints);
         serverMainController.refreshPlayersList();
-        captains.get(captainNickname).getConnection().receivePlayerList(createPlayersList(captainNickname), false);
+        captains.get(captainNickname).getConnection().sendPlayerList(createPlayersList(captainNickname), false);
     }
 
     @Override
@@ -205,6 +185,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (entry.getValue().getCaptainNickname().equals(captainNickname))
                 entry.getValue().getConnection().endOfGame(results);
 
-        removeCommander(captainNickname, true);
+        removeCaptain(captainNickname, true);
     }
 }

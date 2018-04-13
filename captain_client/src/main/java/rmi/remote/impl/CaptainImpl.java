@@ -14,14 +14,9 @@ public class CaptainImpl extends UnicastRemoteObject implements Captain {
     private MainController captainMainController;
 
     public CaptainImpl(String captainNickname, MainController mainController, Server server) throws RemoteException {
-        try {
             this.captainMainController = mainController;
             this.server = server;
-            this.server.registerCommander(this, captainNickname);
-        } catch (RemoteException ex) {
-            System.out.println("Server RemoteException.");
-            System.out.println(ex.getMessage());
-        }
+            this.server.addCaptain(this, captainNickname);
     }
 
     public Server getServer() {
@@ -29,27 +24,17 @@ public class CaptainImpl extends UnicastRemoteObject implements Captain {
     }
 
     @Override
-    public void receiveScore(int score) throws RemoteException {
-
-    }
-
-    @Override
-    public void receivePlayerList(List<PlayerClient> players, Boolean playerHasBeenRemoved) throws RemoteException {
+    public void sendPlayerList(List<PlayerClient> players, Boolean playerHasBeenRemoved) {
         captainMainController.refreshTableView(players, playerHasBeenRemoved);
     }
 
     @Override
-    public void receivePlayer(String player) throws RemoteException {
-
-    }
-
-    @Override
-    public void lossConnectionWithServer() throws RemoteException {
+    public void lossConnectionWithServer() {
         captainMainController.exitFromApplication();
     }
 
     @Override
-    public void addPlayerRoundAnswers(String playerAnswers, String playerNickname) throws RemoteException {
+    public void addPlayerRoundAnswers(String playerAnswers, String playerNickname) {
         captainMainController.addPlayerRoundAnswers(playerAnswers, playerNickname);
     }
 }

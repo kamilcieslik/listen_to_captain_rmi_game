@@ -18,55 +18,37 @@ public class PlayerImpl extends UnicastRemoteObject implements Player, Serializa
     private MainController playerMainController;
 
     public PlayerImpl(String nickname, String type, String captainNickname, MainController mainController, Server server) throws RemoteException {
-        try {
             this.playerMainController = mainController;
             this.server = server;
-            this.server.registerPlayer(this, type, nickname, captainNickname);
-        } catch (RemoteException ex) {
-            System.out.println("Server RemoteException.");
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
-        }
+            this.server.addPlayer(this, type, nickname, captainNickname);
     }
 
     public Server getServer() {
         return server;
     }
 
-    public void setServer(Server server) {
-        this.server = server;
-    }
-
     @Override
-    public void confirmConnection(String message) throws RemoteException {
-
-    }
-
-    @Override
-    public void receiveCommand(String command) throws RemoteException {
+    public void getCommand(String command) {
         playerMainController.getPlayerBeanType_1().setStringPropertyCaptainCommand(command);
-        //String text = spaceCommand.getType().name() + " " + spaceCommand.getParameters().toString();
-        //controller.textField.setText(text);
-        //controller.CurrentCommand = spaceCommand;
     }
 
     @Override
-    public void lossConnectionWithServer() throws RemoteException {
+    public void lossConnectionWithServer() {
         playerMainController.exitFromApplication();
     }
 
     @Override
-    public void startRound(int roundTime) throws RemoteException {
+    public void startRound(int roundTime) {
         playerMainController.startCountdownToTheEndOfRound(roundTime);
     }
 
     @Override
-    public void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException {
+    public void updateNumberOfPlayers(int numberOfCaptainPlayers) {
         Platform.runLater(()-> playerMainController.getPlayerBeanType_1().setIntegerPropertyNumberOfPlayers(numberOfCaptainPlayers));
     }
 
     @Override
-    public void addPoints(Integer numberOfPoints) throws RemoteException {
+    public void addPoints(Integer numberOfPoints) {
         Platform.runLater(()-> playerMainController.getPlayerBeanType_1()
                 .setIntegerPropertyNumberOfPoints(playerMainController.getPlayerBeanType_1()
                         .getIntegerPropertyNumberOfPoints()+numberOfPoints));

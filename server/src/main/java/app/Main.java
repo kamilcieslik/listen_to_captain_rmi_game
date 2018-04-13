@@ -26,9 +26,6 @@ public class Main extends Application {
     public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
     }
-    public static Stage getMainStage() {
-        return mainStage;
-    }
 
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader();

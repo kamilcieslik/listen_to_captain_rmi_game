@@ -57,7 +57,7 @@ public class Main extends Application {
 
     public void stop() throws RemoteException {
         if (server != null)
-            server.removeCommander(captainNickname, false);
+            server.removeCaptain(captainNickname, false);
 
         System.exit(0);
     }

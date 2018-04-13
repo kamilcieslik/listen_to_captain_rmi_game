@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface Player extends Remote
 {
-    void confirmConnection(String message) throws RemoteException;
-    void receiveCommand(String command) throws RemoteException;
+    void getCommand(String command) throws RemoteException;
     void lossConnectionWithServer() throws RemoteException;
     void startRound(int roundTime) throws RemoteException;
     void updateNumberOfPlayers(int numberOfCaptainPlayers) throws RemoteException;
