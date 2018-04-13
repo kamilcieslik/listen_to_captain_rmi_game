@@ -331,12 +331,20 @@
                                             </HBox.margin>
                                         </Label>
                                     </HBox>
+                           <Label fx:id="labelDevice3Player1_Value" alignment="CENTER" prefHeight="27.0" prefWidth="238.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4); -fx-border-color: grey;" text="21" textFill="WHITE">
+                              <font>
+                                 <Font size="16.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="10.0" />
+                              </VBox.margin>
+                           </Label>
                                 </VBox>
                             </HBox>
                             <Region VBox.vgrow="ALWAYS" />
                         </VBox>
                     </VBox>
-                    <VBox fx:id="vBoxPlayer2Devices" alignment="TOP_CENTER" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );" visible="false" HBox.hgrow="ALWAYS">
+                    <VBox fx:id="vBoxPlayer2Devices" alignment="TOP_CENTER" style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );" HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                         </padding>
@@ -497,12 +505,20 @@
                                             </HBox.margin>
                                         </Label>
                                     </HBox>
+                           <Label fx:id="lavelDevice3Player2_Value" alignment="CENTER" prefHeight="27.0" prefWidth="238.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 4, 4); -fx-border-color: grey;" text="21" textFill="WHITE">
+                              <font>
+                                 <Font size="16.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets top="10.0" />
+                              </VBox.margin>
+                           </Label>
                                 </VBox>
                             </HBox>
                             <Region VBox.vgrow="ALWAYS" />
                         </VBox>
                     </VBox>
-                    <VBox fx:id="vBoxPlayer3Devices" alignment="TOP_CENTER" style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );" HBox.hgrow="ALWAYS">
+                    <VBox fx:id="vBoxPlayer3Devices" alignment="TOP_CENTER" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #39393c; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 2 );" visible="false" HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                         </padding>

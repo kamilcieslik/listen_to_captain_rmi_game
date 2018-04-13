@@ -51,7 +51,8 @@ public class PlayerClientBean extends VBox implements Serializable {
             labelDevice2Player2_Parameter1_Name, labelDevice2Player2_Parameter1_Value, labelDevice2Player2_Parameter2_Name,
             labelDevice2Player2_Parameter3_Name, labelDevice2Player2_Parameter3_Value, labelDevice2Player2_Message,
             labelDevice3Player2_Name, labelDevice1Player3_Name, labelDevice1Player3_Message, labelDevice2Player3_Name,
-            labelDevice2Player3_Message, labelDevice3Player3_Name, labelDevice3Player3_Message, labelGameStatus;
+            labelDevice2Player3_Message, labelDevice3Player3_Name, labelDevice3Player3_Message, labelGameStatus,
+            labelDevice3Player1_Value, labelDevice3Player2_Value;
     @FXML
     private TextField textFieldCaptainCommand, textFieldDevice1Player1_Value, textFieldDevice1Player2_Value,
             textFieldDevice2Player2_Parameter2_Value, textFieldDevice1Player3_Value;
@@ -99,7 +100,7 @@ public class PlayerClientBean extends VBox implements Serializable {
                 else
                     roundAnswers += "- tryb spalania paliwa: najwyższa wydajność przyrządów,\n";
             }
-            roundAnswers += "- kąt natarcia: " + String.valueOf(getDoublePropertyAngleOfAttack()) + ".\n";
+            roundAnswers += "- kąt natarcia: " + String.valueOf(Math.round(getDoublePropertyAngleOfAttack())) + ".\n";
         } else if (playerType == 2) {
             if (!labelDevice1Player2_Message.getText().equals(""))
                 roundAnswers += "- temperatura spalania: nie udzielono odpowiedzi,\n";
@@ -111,7 +112,7 @@ public class PlayerClientBean extends VBox implements Serializable {
             else
                 roundAnswers += "- temperatura spalania: " + labelDevice2Player2_Parameter3_Value.getText() + ",\n";
 
-            roundAnswers += "- impuls jednostkowy: " + String.valueOf(getDoublePropertyCombustionTemperature()) + ".\n";
+            roundAnswers += "- impuls jednostkowy: " + String.valueOf(Math.round(getDoublePropertyCombustionTemperature())) + ".\n";
         } else if (playerType == 3) {
             if (!labelDevice1Player3_Message.getText().equals(""))
                 roundAnswers += "- ilość pocisków w magazynku: nie udzielono odpowiedzi,\n";
@@ -145,7 +146,7 @@ public class PlayerClientBean extends VBox implements Serializable {
         sliderDevice3Player1_Value.setValue(13.0);
 
         textFieldDevice1Player2_Value.setText("");
-        integerPropertyNumberOfVentilators.setValue(new Random().nextInt(20));
+        integerPropertyNumberOfVentilators.setValue(new Random().nextInt(20) + 1);
         textFieldDevice2Player2_Parameter2_Value.setText("");
         sliderDevice3Player2_Value.setValue(215.0);
 
@@ -206,11 +207,13 @@ public class PlayerClientBean extends VBox implements Serializable {
         fuelCombustionMode_1.bind(radioButtonDevice2Player1_Option1.selectedProperty());
         fuelCombustionMode_2.bind(radioButtonDevice2Player1_Option2.selectedProperty());
         doublePropertyAngleOfAttack.bind(sliderDevice3Player1_Value.valueProperty());
+        labelDevice3Player1_Value.textProperty().bind(Bindings.format("%d °", Math.round(doublePropertyAngleOfAttack.getValue())));
 
         // Gracz 2:
         labelDevice2Player2_Parameter1_Value.textProperty().bind(integerPropertyNumberOfVentilators.asString());
         doublePropertyCombustionTemperature.bind(sliderDevice3Player2_Value.valueProperty());
         labelDevice2Player2_Parameter3_Value.textProperty().bind(Bindings.format("%.2f", doublePropertyEngineTemperature));
+        labelDevice3Player2_Value.textProperty().bind(Bindings.format("%d °", Math.round(doublePropertyCombustionTemperature.getValue())));
 
         // Gracz 3:
         typeOfTriggerMechanism_1.bind(radioButtonDevice2Player3_Option1.selectedProperty());
@@ -235,7 +238,7 @@ public class PlayerClientBean extends VBox implements Serializable {
         booleanPropertyEndOfGame.addListener((o, oldVal, newVal) -> {
             if (newVal)
                 labelGameStatus.setText("Status aktywnej gry: rozgrywka zakończona.");
-                initNewRoundComponentsValues();
+            initNewRoundComponentsValues();
         });
 
         textFieldDevice2Player2_Parameter2_Value.textProperty().addListener((o, oldVal, newVal) -> {
