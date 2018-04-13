@@ -1,6 +1,6 @@
 # Gra RMI - Listen To Captain
 
-Aplikacja składająca się z trzech modułów: serwera oraz dwóch rodzajów klienta. Pierwszy pełni rolę kapitana gry, drugi
+Aplikacja składająca się z trzech modułów: serwera oraz trzech rodzajów klienta. Pierwszy pełni rolę kapitana gry, drugi
 to gracze wykonujący jego polecenia. Istnieją 3 typy graczy. Kapitan ma możliwość rozpoczęcia, zakończenia gry, wydawania 
 poleceń graczom, odbierania wartości określonych przez nich atryburów i przyznawania/odbierania punktów.
 Serwer przyjmuje połączenia graczy, wyświetla ich listę oraz umożliwia wyrzucenie z gry.
